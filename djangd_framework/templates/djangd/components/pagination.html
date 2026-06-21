@@ -1,0 +1,24 @@
+{% load djangd %}<nav class="djangd-pagination {{ extra_classes }}" role="navigation" aria-label="Pagination"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  <ul class="djangd-pagination__list">
+    {% if page > 1 %}
+      <li><a class="djangd-pagination__link" href="{{ url }}{{ page|add:'-1' }}" rel="prev" aria-label="Previous page">‹</a></li>
+    {% endif %}
+    {% for p in total|rjust:total %}{% endfor %}
+    {% for p in "x"|rjust:total %}
+      {% with n=forloop.counter %}
+        <li>
+          {% if n == page %}
+            <span class="djangd-pagination__current" aria-current="page">{{ n }}</span>
+          {% else %}
+            <a class="djangd-pagination__link" href="{{ url }}{{ n }}" aria-label="Page {{ n }}">{{ n }}</a>
+          {% endif %}
+        </li>
+      {% endwith %}
+    {% endfor %}
+    {% if page < total %}
+      <li><a class="djangd-pagination__link" href="{{ url }}{{ page|add:'1' }}" rel="next" aria-label="Next page">›</a></li>
+    {% endif %}
+  </ul>
+</nav>

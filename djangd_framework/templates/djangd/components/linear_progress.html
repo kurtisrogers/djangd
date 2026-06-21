@@ -1,0 +1,15 @@
+{% load djangd %}<div class="mdc-linear-progress djangd-linear-progress {% if indeterminate %}mdc-linear-progress--indeterminate{% endif %} {{ extra_classes }}"
+     role="progressbar"
+     aria-label="{{ label }}"
+     aria-valuemin="0"
+     aria-valuemax="1"
+     {% if not indeterminate %}aria-valuenow="{{ value }}"{% endif %}
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  <div class="mdc-linear-progress__buffer">
+    <div class="mdc-linear-progress__buffer-bar" {% if buffer %}style="transform: scaleX({{ buffer }});"{% endif %}></div>
+    <div class="mdc-linear-progress__buffer-dots"></div>
+  </div>
+  <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar" {% if value %}style="transform: scaleX({{ value }});"{% endif %}><span class="mdc-linear-progress__bar-inner"></span></div>
+  <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar"><span class="mdc-linear-progress__bar-inner"></span></div>
+</div>

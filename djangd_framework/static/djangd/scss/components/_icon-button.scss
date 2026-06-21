@@ -1,0 +1,16 @@
+.djangd-icon-button {
+  --djangd-icon-button-size: 40px;
+  --djangd-icon-button-fg: var(--djangd-color-on-surface);
+
+  display: inline-flex; align-items: center; justify-content: center;
+  width: var(--djangd-icon-button-size); height: var(--djangd-icon-button-size);
+  border: 0; padding: 0; border-radius: var(--djangd-radius-pill);
+  background: transparent; color: var(--djangd-icon-button-fg);
+  cursor: pointer;
+
+  &:hover { background: color-mix(in srgb, currentColor 8%, transparent); }
+  &:active { background: color-mix(in srgb, currentColor 12%, transparent); }
+  &[disabled] { opacity: .38; cursor: not-allowed; }
+
+  &--on { color: var(--djangd-color-primary); }
+}

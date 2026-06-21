@@ -1,0 +1,76 @@
+// Checkbox / Radio / Switch
+.mdc-form-field { display: inline-flex; align-items: center; gap: var(--djangd-space-2); }
+
+.djangd-checkbox, .mdc-checkbox {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px;
+  &__native-control { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  &__background {
+    width: 18px; height: 18px;
+    border: 2px solid var(--djangd-color-outline);
+    border-radius: var(--djangd-radius-xs);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background var(--djangd-motion-fast) var(--djangd-easing-standard);
+  }
+  &__checkmark { width: 14px; height: 14px; color: var(--djangd-color-on-primary); opacity: 0; }
+  &__checkmark-path { stroke: currentColor; stroke-width: 3.12; stroke-dasharray: 29.78; stroke-dashoffset: 29.78; }
+  &__native-control:checked + .mdc-checkbox__background,
+  &__native-control:checked + .djangd-checkbox__background {
+    background: var(--djangd-color-primary); border-color: var(--djangd-color-primary);
+  }
+  &__native-control:checked + .mdc-checkbox__background .mdc-checkbox__checkmark,
+  &__native-control:checked + .djangd-checkbox__background .mdc-checkbox__checkmark {
+    opacity: 1;
+  }
+  &__native-control:checked + * .mdc-checkbox__checkmark-path { stroke-dashoffset: 0; transition: stroke-dashoffset var(--djangd-motion-base) var(--djangd-easing-standard); }
+}
+
+.djangd-radio, .mdc-radio {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px;
+  &__native-control { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  &__background { position: relative; width: 20px; height: 20px; }
+  &__outer-circle {
+    position: absolute; inset: 0; border: 2px solid var(--djangd-color-outline);
+    border-radius: 50%;
+  }
+  &__inner-circle {
+    position: absolute; inset: 4px; border-radius: 50%; background: var(--djangd-color-primary);
+    transform: scale(0); transition: transform var(--djangd-motion-fast) var(--djangd-easing-standard);
+  }
+  &__native-control:checked ~ .mdc-radio__background .mdc-radio__inner-circle,
+  &__native-control:checked ~ .djangd-radio__background .mdc-radio__inner-circle { transform: scale(1); }
+  &__native-control:checked ~ .mdc-radio__background .mdc-radio__outer-circle,
+  &__native-control:checked ~ .djangd-radio__background .mdc-radio__outer-circle { border-color: var(--djangd-color-primary); }
+}
+
+.djangd-switch, .mdc-switch {
+  --djangd-switch-w: 52px;
+  --djangd-switch-h: 32px;
+  position: relative; display: inline-flex;
+  width: var(--djangd-switch-w); height: var(--djangd-switch-h);
+  border: 0; padding: 0; background: transparent; cursor: pointer;
+
+  &__track {
+    position: absolute; inset: 4px;
+    background: var(--djangd-color-surface-variant);
+    border-radius: var(--djangd-radius-pill);
+    border: 2px solid var(--djangd-color-outline);
+  }
+  &__handle {
+    position: absolute; top: 8px; left: 8px;
+    width: 16px; height: 16px;
+    background: var(--djangd-color-outline);
+    border-radius: 50%;
+    transition: transform var(--djangd-motion-base) var(--djangd-easing-standard);
+  }
+  &--selected .mdc-switch__track,
+  &--selected .djangd-switch__track { background: var(--djangd-color-primary); border-color: var(--djangd-color-primary); }
+  &--selected .mdc-switch__handle,
+  &--selected .djangd-switch__handle { background: var(--djangd-color-on-primary); transform: translateX(20px); }
+  &__icon { width: 16px; height: 16px; }
+  &__icons { position: relative; }
+  &__shadow, &__ripple, &__focus-ring, &__handle-track { display: contents; }
+  &--unselected .mdc-switch__icon--on, &--unselected .djangd-switch__icon--on { display: none; }
+  &--selected .mdc-switch__icon--off, &--selected .djangd-switch__icon--off { display: none; }
+}

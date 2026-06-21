@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "djangd-framework"
+version = "0.1.0"
+description = "A Django component library based on Material Design (MDC Web) with BEM, WCAG AA accessibility, theming, and an extensible component registry."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Kurtis Rogers" }]
+keywords = ["django", "components", "material", "material-ui", "mdc", "bem", "wcag", "storybook"]
+classifiers = [
+    "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+]
+dependencies = [
+    "Django>=4.2",
+    "django-pattern-library>=1.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-django>=4.8",
+    "ruff>=0.5",
+    "build",
+]
+
+[project.urls]
+Homepage = "https://github.com/kurtisrogers/djangd-framework"
+Documentation = "https://kurtisrogers.github.io/djangd-framework/"
+Issues = "https://github.com/kurtisrogers/djangd-framework/issues"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["djangd_framework*"]
+exclude = ["tests*", "example*", "storybook*"]
+
+[tool.setuptools.package-data]
+djangd_framework = [
+    "templates/**/*.html",
+    "static/**/*",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+python_files = ["test_*.py"]
+pythonpath = ["."]

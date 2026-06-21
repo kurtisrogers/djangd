@@ -1,0 +1,13 @@
+{% load djangd %}<button
+  class="mdc-icon-button djangd-icon-button {% if toggled %}mdc-icon-button--on{% endif %} {{ extra_classes }}"
+  type="button"
+  aria-label="{{ label }}"
+  aria-pressed="{% if toggled %}true{% else %}false{% endif %}"
+  {% if disabled %}disabled{% endif %}
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}
+>
+  <span class="mdc-icon-button__ripple"></span>
+  <span class="mdc-icon-button__focus-ring"></span>
+  <i class="material-icons" aria-hidden="true">{{ icon }}</i>
+</button>

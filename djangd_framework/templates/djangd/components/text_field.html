@@ -1,0 +1,56 @@
+{% load djangd %}{% with input_id=id|default:"djangd-tf"|add:"-"|add:name %}
+<label class="mdc-text-field mdc-text-field--{{ variant }} djangd-text-field {% if disabled %}mdc-text-field--disabled{% endif %} {% if error %}mdc-text-field--invalid{% endif %} {% if leading_icon %}mdc-text-field--with-leading-icon{% endif %} {% if trailing_icon %}mdc-text-field--with-trailing-icon{% endif %} {% if rows %}mdc-text-field--textarea{% endif %} {{ extra_classes }}">
+  {% if variant == "outlined" %}
+    <span class="mdc-notched-outline">
+      <span class="mdc-notched-outline__leading"></span>
+      <span class="mdc-notched-outline__notch">
+        <span class="mdc-floating-label" id="{{ input_id }}-label">{{ label }}{% if required %} <span aria-hidden="true">*</span>{% endif %}</span>
+      </span>
+      <span class="mdc-notched-outline__trailing"></span>
+    </span>
+  {% else %}
+    <span class="mdc-text-field__ripple"></span>
+    <span class="mdc-floating-label" id="{{ input_id }}-label">{{ label }}{% if required %} <span aria-hidden="true">*</span>{% endif %}</span>
+  {% endif %}
+
+  {% if leading_icon %}<i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading" aria-hidden="true">{{ leading_icon }}</i>{% endif %}
+
+  {% if rows %}
+    <textarea
+      class="mdc-text-field__input"
+      id="{{ input_id }}"
+      name="{{ name }}"
+      rows="{{ rows }}"
+      aria-labelledby="{{ input_id }}-label"
+      {% if helper %}aria-describedby="{{ input_id }}-helper"{% endif %}
+      {% if required %}required aria-required="true"{% endif %}
+      {% if disabled %}disabled{% endif %}
+      {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+      {{ attrs|djangd_attrs }}
+    >{{ value }}</textarea>
+  {% else %}
+    <input
+      class="mdc-text-field__input"
+      type="{{ type }}"
+      id="{{ input_id }}"
+      name="{{ name }}"
+      value="{{ value }}"
+      aria-labelledby="{{ input_id }}-label"
+      {% if helper %}aria-describedby="{{ input_id }}-helper"{% endif %}
+      {% if required %}required aria-required="true"{% endif %}
+      {% if error %}aria-invalid="true"{% endif %}
+      {% if disabled %}disabled{% endif %}
+      {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+      {{ attrs|djangd_attrs }}
+    />
+  {% endif %}
+
+  {% if trailing_icon %}<i class="material-icons mdc-text-field__icon mdc-text-field__icon--trailing" tabindex="0" role="button" aria-label="{{ trailing_icon }} action">{{ trailing_icon }}</i>{% endif %}
+  {% if variant != "outlined" %}<span class="mdc-line-ripple"></span>{% endif %}
+</label>
+{% if helper %}
+  <div class="mdc-text-field-helper-line">
+    <div class="mdc-text-field-helper-text {% if error %}mdc-text-field-helper-text--validation-msg{% endif %}" id="{{ input_id }}-helper" aria-hidden="false">{{ helper }}</div>
+  </div>
+{% endif %}
+{% endwith %}

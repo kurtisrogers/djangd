@@ -1,0 +1,57 @@
+// =============================================================================
+// Button — BEM block: .djangd-button (alongside MDC's .mdc-button)
+// Override hooks: --djangd-button-*
+// =============================================================================
+
+.djangd-button {
+  --djangd-button-padding-x: var(--djangd-space-4);
+  --djangd-button-padding-y: var(--djangd-space-2);
+  --djangd-button-radius:    var(--djangd-radius-pill);
+  --djangd-button-bg:        transparent;
+  --djangd-button-fg:        var(--djangd-color-primary);
+  --djangd-button-border:    transparent;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--djangd-space-2);
+  min-height: 40px;
+  padding: var(--djangd-button-padding-y) var(--djangd-button-padding-x);
+  border-radius: var(--djangd-button-radius);
+  background: var(--djangd-button-bg);
+  color: var(--djangd-button-fg);
+  border: 1px solid var(--djangd-button-border);
+  font-family: var(--djangd-font-family);
+  font-size: var(--djangd-text-label-large);
+  font-weight: 500;
+  letter-spacing: .025em;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--djangd-motion-base) var(--djangd-easing-standard),
+              box-shadow var(--djangd-motion-base) var(--djangd-easing-standard);
+
+  &:hover { background: color-mix(in srgb, var(--djangd-button-fg) 8%, transparent); }
+  &:active { background: color-mix(in srgb, var(--djangd-button-fg) 12%, transparent); }
+  &[disabled], &[aria-disabled="true"] {
+    opacity: .38;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // --- Variants ----------------------------------------------------------
+  &--outlined {
+    --djangd-button-border: var(--djangd-color-outline);
+  }
+  &--raised,
+  &--unelevated {
+    --djangd-button-bg: var(--djangd-color-primary);
+    --djangd-button-fg: var(--djangd-color-on-primary);
+    &:hover { background: color-mix(in srgb, var(--djangd-color-primary) 92%, white); }
+  }
+  &--raised { @include djangd-elevation(1); }
+  &--raised:hover { @include djangd-elevation(2); }
+
+  // --- Sizes -------------------------------------------------------------
+  &--small  { min-height: 32px; --djangd-button-padding-x: var(--djangd-space-3); font-size: var(--djangd-text-label-medium); }
+  &--large  { min-height: 48px; --djangd-button-padding-x: var(--djangd-space-5); font-size: var(--djangd-text-title-medium); }
+}

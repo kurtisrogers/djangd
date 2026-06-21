@@ -1,0 +1,24 @@
+.djangd-fab,
+.mdc-fab {
+  --djangd-fab-size: 56px;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--djangd-space-2);
+  width: var(--djangd-fab-size); height: var(--djangd-fab-size);
+  border: 0; border-radius: var(--djangd-radius-lg);
+  background: var(--djangd-color-primary-container);
+  color: var(--djangd-color-on-primary-container);
+  cursor: pointer;
+  @include djangd-elevation(3);
+  transition: box-shadow var(--djangd-motion-base) var(--djangd-easing-standard);
+
+  &:hover  { @include djangd-elevation(4); }
+  &--mini  { --djangd-fab-size: 40px; }
+  &--extended {
+    width: auto; padding: 0 var(--djangd-space-4);
+    border-radius: var(--djangd-radius-lg);
+  }
+  &--exited { transform: scale(0); }
+
+  &__icon { font-size: 24px; }
+  &__label { font-weight: 500; }
+}

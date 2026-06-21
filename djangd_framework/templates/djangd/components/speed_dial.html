@@ -1,0 +1,17 @@
+{% load djangd %}<div class="djangd-speed-dial {{ extra_classes }}"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  <button class="mdc-fab djangd-speed-dial__trigger" aria-label="{{ label }}" aria-haspopup="menu" aria-expanded="false" type="button">
+    <span class="mdc-fab__ripple"></span>
+    <span class="material-icons mdc-fab__icon" aria-hidden="true">{{ icon }}</span>
+  </button>
+  <ul class="djangd-speed-dial__actions" role="menu">
+    {% for action in actions %}
+      <li role="none">
+        <button class="mdc-fab mdc-fab--mini djangd-speed-dial__action" role="menuitem" aria-label="{{ action.label }}" type="button">
+          <span class="material-icons mdc-fab__icon" aria-hidden="true">{{ action.icon }}</span>
+        </button>
+      </li>
+    {% endfor %}
+  </ul>
+</div>

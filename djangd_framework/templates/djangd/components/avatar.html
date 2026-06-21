@@ -1,0 +1,11 @@
+{% load djangd %}<span class="djangd-avatar djangd-avatar--{{ size }} djangd-avatar--{{ shape }} {{ extra_classes }}"
+      {% if id %}id="{{ id }}"{% endif %}
+      {{ attrs|djangd_attrs }}>
+  {% if src %}
+    <img class="djangd-avatar__image" src="{{ src }}" alt="{{ alt }}" />
+  {% elif initials %}
+    <span class="djangd-avatar__initials" aria-label="{{ alt|default:initials }}">{{ initials }}</span>
+  {% else %}
+    <i class="material-icons djangd-avatar__icon" aria-label="{{ alt|default:'User' }}">person</i>
+  {% endif %}
+</span>

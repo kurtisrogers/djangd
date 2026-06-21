@@ -1,0 +1,24 @@
+{% load djangd %}<ul class="mdc-deprecated-list djangd-list {% if two_line %}mdc-deprecated-list--two-line{% endif %} {% if avatar_list %}mdc-deprecated-list--avatar-list{% endif %} {% if dense %}mdc-deprecated-list--dense{% endif %} {% if non_interactive %}mdc-deprecated-list--non-interactive{% endif %} {{ extra_classes }}"
+    role="list"
+    {% if id %}id="{{ id }}"{% endif %}
+    {{ attrs|djangd_attrs }}>
+  {% for item in items %}
+    {% if item.divider %}
+      <li class="mdc-deprecated-list-divider" role="separator"></li>
+    {% else %}
+      <li class="mdc-deprecated-list-item {% if item.selected %}mdc-deprecated-list-item--selected{% endif %} {% if item.disabled %}mdc-deprecated-list-item--disabled{% endif %}"
+          role="listitem"
+          {% if item.disabled %}aria-disabled="true"{% endif %}
+          tabindex="{% if forloop.first %}0{% else %}-1{% endif %}">
+        <span class="mdc-deprecated-list-item__ripple"></span>
+        {% if item.icon %}<i class="material-icons mdc-deprecated-list-item__graphic" aria-hidden="true">{{ item.icon }}</i>{% endif %}
+        {% if item.avatar %}<img class="mdc-deprecated-list-item__graphic" src="{{ item.avatar }}" alt="" />{% endif %}
+        <span class="mdc-deprecated-list-item__text">
+          <span class="mdc-deprecated-list-item__primary-text">{{ item.label }}</span>
+          {% if item.secondary %}<span class="mdc-deprecated-list-item__secondary-text">{{ item.secondary }}</span>{% endif %}
+        </span>
+        {% if item.meta %}<span class="mdc-deprecated-list-item__meta" aria-hidden="true">{{ item.meta }}</span>{% endif %}
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>

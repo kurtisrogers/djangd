@@ -1,0 +1,14 @@
+.djangd-chip,
+.mdc-chip {
+  display: inline-flex; align-items: center; gap: var(--djangd-space-2);
+  height: 32px; padding: 0 var(--djangd-space-3);
+  border-radius: var(--djangd-radius-sm);
+  background: var(--djangd-color-surface-variant);
+  color: var(--djangd-color-on-surface-variant);
+  font-size: var(--djangd-text-label-large);
+  cursor: pointer;
+
+  &--selected { background: var(--djangd-color-secondary-container); }
+  &__icon { font-size: 18px; }
+  &__primary-action { cursor: pointer; }
+}

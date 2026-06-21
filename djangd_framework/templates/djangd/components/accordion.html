@@ -1,0 +1,27 @@
+{% load djangd %}<div class="djangd-accordion {{ extra_classes }}"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  {% for item in items %}
+    {% with panel_id=id|default:"acc"|add:"-"|add:forloop.counter|stringformat:"s" %}
+      <div class="djangd-accordion__item {% if item.open %}djangd-accordion__item--open{% endif %}">
+        <h3 class="djangd-accordion__heading">
+          <button class="djangd-accordion__trigger"
+                  type="button"
+                  aria-expanded="{% if item.open %}true{% else %}false{% endif %}"
+                  aria-controls="{{ panel_id }}-panel"
+                  id="{{ panel_id }}-trigger">
+            <span class="djangd-accordion__title">{{ item.title }}</span>
+            <i class="material-icons djangd-accordion__icon" aria-hidden="true">expand_more</i>
+          </button>
+        </h3>
+        <div class="djangd-accordion__panel"
+             id="{{ panel_id }}-panel"
+             role="region"
+             aria-labelledby="{{ panel_id }}-trigger"
+             {% if not item.open %}hidden{% endif %}>
+          {{ item.content|safe }}
+        </div>
+      </div>
+    {% endwith %}
+  {% endfor %}
+</div>

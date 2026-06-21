@@ -1,0 +1,55 @@
+{% load djangd %}{% with sel_id=id|default:"djangd-sel"|add:"-"|add:name %}
+<div class="mdc-select mdc-select--{{ variant }} djangd-select {% if disabled %}mdc-select--disabled{% endif %} {% if required %}mdc-select--required{% endif %} {{ extra_classes }}">
+  <div class="mdc-select__anchor"
+       role="button"
+       aria-haspopup="listbox"
+       aria-expanded="false"
+       aria-labelledby="{{ sel_id }}-label {{ sel_id }}-selected-text"
+       aria-required="{% if required %}true{% else %}false{% endif %}"
+       tabindex="0">
+    {% if variant == "outlined" %}
+      <span class="mdc-notched-outline">
+        <span class="mdc-notched-outline__leading"></span>
+        <span class="mdc-notched-outline__notch">
+          <span id="{{ sel_id }}-label" class="mdc-floating-label">{{ label }}</span>
+        </span>
+        <span class="mdc-notched-outline__trailing"></span>
+      </span>
+    {% else %}
+      <span class="mdc-select__ripple"></span>
+      <span id="{{ sel_id }}-label" class="mdc-floating-label">{{ label }}</span>
+    {% endif %}
+    <span class="mdc-select__selected-text-container">
+      <span id="{{ sel_id }}-selected-text" class="mdc-select__selected-text"></span>
+    </span>
+    <span class="mdc-select__dropdown-icon">
+      <svg class="mdc-select__dropdown-icon-graphic" viewBox="7 10 10 5" focusable="false" aria-hidden="true">
+        <polygon class="mdc-select__dropdown-icon-inactive" stroke="none" fill-rule="evenodd" points="7 10 12 15 17 10"></polygon>
+        <polygon class="mdc-select__dropdown-icon-active" stroke="none" fill-rule="evenodd" points="7 15 12 10 17 15"></polygon>
+      </svg>
+    </span>
+    {% if variant != "outlined" %}<span class="mdc-line-ripple"></span>{% endif %}
+  </div>
+
+  <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
+    <ul class="mdc-deprecated-list" role="listbox" aria-label="{{ label }}">
+      {% for opt in options %}
+        <li class="mdc-deprecated-list-item {% if opt.value == value %}mdc-deprecated-list-item--selected{% endif %}"
+            aria-selected="{% if opt.value == value %}true{% else %}false{% endif %}"
+            data-value="{{ opt.value }}"
+            role="option">
+          <span class="mdc-deprecated-list-item__ripple"></span>
+          <span class="mdc-deprecated-list-item__text">{{ opt.label }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <select name="{{ name }}" id="{{ sel_id }}" hidden tabindex="-1" aria-hidden="true">
+    {% for opt in options %}
+      <option value="{{ opt.value }}" {% if opt.value == value %}selected{% endif %}>{{ opt.label }}</option>
+    {% endfor %}
+  </select>
+</div>
+{% if helper %}<div class="mdc-select-helper-text">{{ helper }}</div>{% endif %}
+{% endwith %}

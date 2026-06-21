@@ -1,0 +1,8 @@
+{% load djangd %}<span class="djangd-badge djangd-badge--{{ color }} {% if dot %}djangd-badge--dot{% endif %} {{ extra_classes }}"
+      role="status"
+      aria-label="{% if dot %}New notification{% else %}{{ value }}{% endif %}"
+      {% if id %}id="{{ id }}"{% endif %}
+      {{ attrs|djangd_attrs }}>
+  {{ children }}
+  {% if not dot %}<span class="djangd-badge__content">{% if value > max %}{{ max }}+{% else %}{{ value }}{% endif %}</span>{% endif %}
+</span>

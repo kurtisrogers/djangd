@@ -1,0 +1,18 @@
+{% load djangd %}<header class="mdc-top-app-bar mdc-top-app-bar--{{ variant }} djangd-app-bar {{ extra_classes }}"
+        role="banner"
+        {% if id %}id="{{ id }}"{% endif %}
+        {{ attrs|djangd_attrs }}>
+  <div class="mdc-top-app-bar__row">
+    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start" role="toolbar">
+      <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="{{ navigation_label }}">
+        {{ navigation_icon }}
+      </button>
+      <span class="mdc-top-app-bar__title">{{ title }}{{ children }}</span>
+    </section>
+    {% if actions %}
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+        {% for action in actions %}{{ action|safe }}{% endfor %}
+      </section>
+    {% endif %}
+  </div>
+</header>

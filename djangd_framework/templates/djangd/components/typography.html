@@ -1,0 +1,7 @@
+{% load djangd %}{% spaceless %}
+{% with element=tag|default:"p" %}
+<{{ element }} class="mdc-typography mdc-typography--{{ variant }} djangd-typography djangd-typography--{{ variant }} {% if align %}djangd-typography--align-{{ align }}{% endif %} {% if color %}djangd-typography--color-{{ color }}{% endif %} {% if no_wrap %}djangd-typography--no-wrap{% endif %} {{ extra_classes }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>{{ text }}{{ children }}</{{ element }}>
+{% endwith %}
+{% endspaceless %}

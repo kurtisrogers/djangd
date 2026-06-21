@@ -1,0 +1,26 @@
+{% load djangd %}<aside class="mdc-drawer djangd-drawer mdc-drawer--{{ variant }} {% if open %}mdc-drawer--open{% endif %} {{ extra_classes }}"
+       aria-label="Side navigation"
+       {% if id %}id="{{ id }}"{% endif %}
+       {{ attrs|djangd_attrs }}>
+  {% if title or subtitle %}
+    <div class="mdc-drawer__header">
+      {% if title %}<h3 class="mdc-drawer__title">{{ title }}</h3>{% endif %}
+      {% if subtitle %}<h6 class="mdc-drawer__subtitle">{{ subtitle }}</h6>{% endif %}
+    </div>
+  {% endif %}
+  <div class="mdc-drawer__content">
+    <nav class="mdc-deprecated-list">
+      {% for item in items %}
+        <a class="mdc-deprecated-list-item {% if item.active %}mdc-deprecated-list-item--activated{% endif %}"
+           href="{{ item.href|default:'#' }}"
+           {% if item.active %}aria-current="page"{% endif %}>
+          <span class="mdc-deprecated-list-item__ripple"></span>
+          {% if item.icon %}<i class="material-icons mdc-deprecated-list-item__graphic" aria-hidden="true">{{ item.icon }}</i>{% endif %}
+          <span class="mdc-deprecated-list-item__text">{{ item.label }}</span>
+        </a>
+      {% endfor %}
+      {{ children }}
+    </nav>
+  </div>
+</aside>
+{% if variant == "modal" %}<div class="mdc-drawer-scrim"></div>{% endif %}

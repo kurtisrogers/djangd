@@ -1,0 +1,34 @@
+{% load djangd %}{% with sw_id=id|default:"djangd-sw"|add:"-"|add:name %}
+<div class="mdc-form-field djangd-form-field {{ extra_classes }}">
+  <button
+    id="{{ sw_id }}"
+    class="mdc-switch djangd-switch {% if checked %}mdc-switch--selected{% else %}mdc-switch--unselected{% endif %} {% if disabled %}mdc-switch--disabled{% endif %}"
+    type="button"
+    role="switch"
+    aria-checked="{% if checked %}true{% else %}false{% endif %}"
+    {% if disabled %}disabled{% endif %}
+    {{ attrs|djangd_attrs }}
+  >
+    <div class="mdc-switch__track"></div>
+    <div class="mdc-switch__handle-track">
+      <div class="mdc-switch__handle">
+        <div class="mdc-switch__shadow"></div>
+        <div class="mdc-switch__ripple"></div>
+        <div class="mdc-switch__icons">
+          <svg class="mdc-switch__icon mdc-switch__icon--on" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
+          </svg>
+          <svg class="mdc-switch__icon mdc-switch__icon--off" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 13H4v-2h16v2z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <span class="mdc-switch__focus-ring-wrapper">
+      <div class="mdc-switch__focus-ring"></div>
+    </span>
+  </button>
+  {% if name %}<input type="hidden" name="{{ name }}" value="{% if checked %}1{% else %}0{% endif %}" />{% endif %}
+  {% if label %}<label for="{{ sw_id }}">{{ label }}</label>{% endif %}
+</div>
+{% endwith %}

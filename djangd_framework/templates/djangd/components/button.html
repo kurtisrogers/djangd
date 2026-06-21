@@ -1,0 +1,25 @@
+{% load djangd %}{% spaceless %}
+{% if href %}
+<a
+  class="mdc-button mdc-button--{{ variant }} djangd-button djangd-button--{{ size }} {{ extra_classes }}"
+  href="{{ href }}"
+  {% if disabled %}aria-disabled="true" tabindex="-1"{% endif %}
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}
+>
+{% else %}
+<button
+  class="mdc-button mdc-button--{{ variant }} djangd-button djangd-button--{{ size }} {{ extra_classes }}"
+  type="{{ type }}"
+  {% if disabled %}disabled aria-disabled="true"{% endif %}
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}
+>
+{% endif %}
+  <span class="mdc-button__ripple"></span>
+  <span class="mdc-button__focus-ring"></span>
+  {% if icon and not trailing_icon %}<i class="material-icons mdc-button__icon" aria-hidden="true">{{ icon }}</i>{% endif %}
+  <span class="mdc-button__label">{{ label }}{{ children }}</span>
+  {% if icon and trailing_icon %}<i class="material-icons mdc-button__icon" aria-hidden="true">{{ icon }}</i>{% endif %}
+{% if href %}</a>{% else %}</button>{% endif %}
+{% endspaceless %}

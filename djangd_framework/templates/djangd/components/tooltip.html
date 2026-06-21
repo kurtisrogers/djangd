@@ -1,0 +1,8 @@
+{% load djangd %}{% with tip_id=id|default:"djangd-tip" %}
+<div class="djangd-tooltip djangd-tooltip--{{ position }} {{ extra_classes }}"
+     id="{{ tip_id }}"
+     role="tooltip"
+     {{ attrs|djangd_attrs }}>
+  {{ text }}
+</div>
+{% endwith %}

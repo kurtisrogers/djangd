@@ -1,0 +1,5 @@
+{% load djangd %}<div class="djangd-paper djangd-paper--elevation-{{ elevation }} mdc-elevation--z{{ elevation }} {{ extra_classes }}"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  {{ children }}
+</div>

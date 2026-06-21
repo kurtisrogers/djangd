@@ -1,0 +1,6 @@
+{% load djangd %}<div class="djangd-stack djangd-stack--{{ direction }} djangd-stack--gap-{{ gap }} {% if align %}djangd-stack--align-{{ align }}{% endif %} {% if justify %}djangd-stack--justify-{{ justify }}{% endif %} {{ extra_classes }}"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  {% for item in items %}{{ item|safe }}{% endfor %}
+  {{ children }}
+</div>

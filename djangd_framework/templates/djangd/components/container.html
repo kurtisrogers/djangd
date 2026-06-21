@@ -1,0 +1,5 @@
+{% load djangd %}<div class="djangd-container djangd-container--{{ max_width }} {% if fluid %}djangd-container--fluid{% endif %} {% if padded %}djangd-container--padded{% endif %} {{ extra_classes }}"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  {{ children }}
+</div>

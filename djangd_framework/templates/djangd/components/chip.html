@@ -1,0 +1,28 @@
+{% load djangd %}<div
+  class="mdc-chip djangd-chip {% if selected %}mdc-chip--selected{% endif %} {{ extra_classes }}"
+  role="row"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}
+>
+  <div class="mdc-chip__ripple"></div>
+  {% if icon %}<i class="material-icons mdc-chip__icon mdc-chip__icon--leading" aria-hidden="true">{{ icon }}</i>{% endif %}
+  <span role="gridcell">
+    <span role="button" tabindex="0" class="mdc-chip__primary-action">
+      <span class="mdc-chip__text">{{ label }}</span>
+    </span>
+  </span>
+  {% if removable %}
+    <span role="gridcell">
+      <button
+        type="button"
+        class="mdc-chip__icon mdc-chip__icon--trailing"
+        tabindex="-1"
+        aria-label="Remove {{ label }}"
+      >
+        <i class="material-icons" aria-hidden="true">cancel</i>
+      </button>
+    </span>
+  {% elif trailing_icon %}
+    <i class="material-icons mdc-chip__icon mdc-chip__icon--trailing" aria-hidden="true">{{ trailing_icon }}</i>
+  {% endif %}
+</div>

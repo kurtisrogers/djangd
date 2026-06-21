@@ -1,0 +1,35 @@
+// =============================================================================
+// djangd-framework — main entry point
+//
+// Import this file (or the prebuilt djangd.css) once per page. Override any
+// CSS custom property defined in `abstracts/_tokens.scss` to retheme without
+// rebuilding Sass.
+//
+// To extend a single component's styles, write your own SCSS that targets the
+// `.djangd-<block>` class — the framework guarantees BEM semantics:
+//
+//     block:    .djangd-card
+//     element:  .djangd-card__media
+//     modifier: .djangd-card--outlined
+//
+// =============================================================================
+
+@use "abstracts/tokens";
+@forward "abstracts/mixins";
+
+@use "abstracts/mixins" as *;
+@use "base/reset";
+
+@use "components/button";
+@use "components/icon-button";
+@use "components/fab";
+@use "components/chip";
+@use "components/text-field";
+@use "components/selection";
+@use "components/card";
+@use "components/navigation";
+@use "components/data";
+@use "components/feedback";
+@use "components/layout";
+
+@use "themes/default" as *;

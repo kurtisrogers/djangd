@@ -1,0 +1,17 @@
+{% load djangd %}<ol class="djangd-stepper djangd-stepper--{{ orientation }} {{ extra_classes }}"
+    role="list"
+    {% if id %}id="{{ id }}"{% endif %}
+    {{ attrs|djangd_attrs }}>
+  {% for step in steps %}
+    {% with idx=forloop.counter0 %}
+      <li class="djangd-stepper__step {% if idx == active %}djangd-stepper__step--active{% endif %} {% if idx < active %}djangd-stepper__step--complete{% endif %}"
+          aria-current="{% if idx == active %}step{% endif %}">
+        <span class="djangd-stepper__indicator" aria-hidden="true">
+          {% if idx < active %}<i class="material-icons">check</i>{% else %}{{ forloop.counter }}{% endif %}
+        </span>
+        <span class="djangd-stepper__label">{{ step.label }}</span>
+        {% if step.optional %}<span class="djangd-stepper__optional">Optional</span>{% endif %}
+      </li>
+    {% endwith %}
+  {% endfor %}
+</ol>

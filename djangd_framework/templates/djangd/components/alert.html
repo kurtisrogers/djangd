@@ -1,0 +1,18 @@
+{% load djangd %}<div class="djangd-alert djangd-alert--{{ severity }} {{ extra_classes }}"
+     role="alert"
+     aria-live="polite"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  <i class="material-icons djangd-alert__icon" aria-hidden="true">
+    {% if icon %}{{ icon }}{% else %}{% if severity == 'success' %}check_circle{% elif severity == 'warning' %}warning{% elif severity == 'error' %}error{% else %}info{% endif %}{% endif %}
+  </i>
+  <div class="djangd-alert__body">
+    {% if title %}<div class="djangd-alert__title">{{ title }}</div>{% endif %}
+    <div class="djangd-alert__message">{{ message }}{{ children }}</div>
+  </div>
+  {% if dismissible %}
+    <button type="button" class="djangd-alert__dismiss mdc-icon-button" aria-label="Dismiss alert">
+      <i class="material-icons" aria-hidden="true">close</i>
+    </button>
+  {% endif %}
+</div>

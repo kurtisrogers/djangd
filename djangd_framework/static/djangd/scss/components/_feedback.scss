@@ -1,4 +1,6 @@
 // Alerts, snackbars, dialogs, progress, skeletons
+@use "../abstracts/mixins" as *;
+
 .djangd-alert {
   display: flex; gap: var(--djangd-space-3);
   padding: var(--djangd-space-3) var(--djangd-space-4);

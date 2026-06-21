@@ -4,6 +4,8 @@
 // generic <h1>-<h6>, <a>, <table> so users keep control of global styles.
 // =============================================================================
 
+@use "../abstracts/mixins" as *;
+
 *, *::before, *::after { box-sizing: border-box; }
 
 .djangd-visually-hidden {

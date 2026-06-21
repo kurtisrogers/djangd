@@ -1,4 +1,6 @@
 // App bar, drawer, tabs, bottom nav, breadcrumbs, pagination, menu
+@use "../abstracts/mixins" as *;
+
 .djangd-app-bar, .mdc-top-app-bar {
   display: flex; align-items: center;
   height: 64px;

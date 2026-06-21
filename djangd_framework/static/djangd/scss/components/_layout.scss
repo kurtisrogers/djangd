@@ -1,4 +1,6 @@
 // Container, grid, stack, divider, image-list, stepper, accordion, speed-dial, rating, toggle-group, slider, icon
+@use "../abstracts/mixins" as *;
+
 .djangd-container {
   margin: 0 auto; width: 100%;
   &--xs { max-width: 444px; }

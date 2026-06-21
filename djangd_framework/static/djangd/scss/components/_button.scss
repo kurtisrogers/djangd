@@ -3,6 +3,8 @@
 // Override hooks: --djangd-button-*
 // =============================================================================
 
+@use "../abstracts/mixins" as *;
+
 .djangd-button {
   --djangd-button-padding-x: var(--djangd-space-4);
   --djangd-button-padding-y: var(--djangd-space-2);

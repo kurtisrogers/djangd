@@ -1,0 +1,16 @@
+{% load djangd %}<div class="djangd-rating {% if readonly %}djangd-rating--readonly{% endif %} {{ extra_classes }}"
+     role="radiogroup"
+     aria-label="{{ label }}"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  {% for _ in max|rjust:max %}{% endfor %}
+  {% for _ in "x"|rjust:max %}
+    {% with i=forloop.counter %}
+      <label class="djangd-rating__star">
+        <input type="radio" name="{{ name }}" value="{{ i }}" {% if value == i %}checked{% endif %} {% if readonly %}disabled{% endif %} />
+        <i class="material-icons" aria-hidden="true">{% if i <= value %}star{% else %}star_border{% endif %}</i>
+        <span class="djangd-visually-hidden">{{ i }} star{{ i|pluralize }}</span>
+      </label>
+    {% endwith %}
+  {% endfor %}
+</div>

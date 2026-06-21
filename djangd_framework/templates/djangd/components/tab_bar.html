@@ -1,0 +1,26 @@
+{% load djangd %}<div class="mdc-tab-bar djangd-tab-bar {{ extra_classes }}" role="tablist"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  <div class="mdc-tab-scroller">
+    <div class="mdc-tab-scroller__scroll-area">
+      <div class="mdc-tab-scroller__scroll-content">
+        {% for tab in tabs %}
+          <button class="mdc-tab {% if forloop.counter0 == active %}mdc-tab--active{% endif %} {% if stacked %}mdc-tab--stacked{% endif %} {% if min_width %}mdc-tab--min-width{% endif %}"
+                  role="tab"
+                  aria-selected="{% if forloop.counter0 == active %}true{% else %}false{% endif %}"
+                  tabindex="{% if forloop.counter0 == active %}0{% else %}-1{% endif %}">
+            <span class="mdc-tab__content">
+              {% if tab.icon %}<span class="mdc-tab__icon material-icons" aria-hidden="true">{{ tab.icon }}</span>{% endif %}
+              <span class="mdc-tab__text-label">{{ tab.label }}</span>
+            </span>
+            <span class="mdc-tab-indicator {% if forloop.counter0 == active %}mdc-tab-indicator--active{% endif %}">
+              <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+            </span>
+            <span class="mdc-tab__ripple"></span>
+            <span class="mdc-tab__focus-ring"></span>
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>

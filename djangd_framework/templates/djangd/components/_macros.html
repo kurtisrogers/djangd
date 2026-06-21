@@ -1,0 +1,9 @@
+{% load djangd %}{% comment %}
+Shared helpers as nested {% include %}-able partials.
+
+Every component template should:
+  - Use a single root element with class "mdc-<block>  djangd-<block>".
+  - Append {{ extra_classes }} so callers can layer Tailwind/Bootstrap/etc.
+  - Spread {{ attrs|djangd_attrs }} so callers can pass arbitrary HTML attrs.
+  - Include all WCAG AA requirements (visible label, aria-*, focus order).
+{% endcomment %}

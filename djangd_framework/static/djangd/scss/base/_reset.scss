@@ -1,0 +1,23 @@
+// =============================================================================
+// Minimal reset — only what's needed so components render predictably without
+// fighting whatever the host site provides. We deliberately do NOT reset
+// generic <h1>-<h6>, <a>, <table> so users keep control of global styles.
+// =============================================================================
+
+*, *::before, *::after { box-sizing: border-box; }
+
+.djangd-visually-hidden {
+  @include djangd-visually-hidden;
+}
+
+// Focus rings: only show when keyboard-driven, but always for high-contrast users.
+:where(.djangd-button, .djangd-icon-button, .djangd-chip, .mdc-tab, .djangd-toggle-group__segment):focus-visible {
+  @include djangd-focus-ring;
+}
+
+@include djangd-respect-motion {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}

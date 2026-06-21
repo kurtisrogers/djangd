@@ -1,0 +1,39 @@
+{% extends "example_app/base.html" %}
+{% load djangd %}
+
+{% block content %}
+  {% component "app_bar" title="djangd-framework demo" / %}
+
+  {% component "container" max_width="lg" padded=True %}
+    <section style="padding: 32px 0;">
+      {% component "example.hero_card" title="Drop-in Material components for Django" subtitle="BEM, themeable, AA accessible." cta_label="Get started" cta_href="#" / %}
+    </section>
+
+    <section style="padding: 16px 0;">
+      {% component "typography" variant="headline-medium" tag="h2" text="Buttons" / %}
+      <div style="display:flex;gap:8px;align-items:center;margin-top:8px;">
+        {% component "button" label="Raised" variant="raised" icon="save" / %}
+        {% component "button" label="Outlined" variant="outlined" / %}
+        {% component "button" label="Text" variant="text" / %}
+      </div>
+    </section>
+
+    <section style="padding: 16px 0;">
+      {% component "typography" variant="headline-medium" tag="h2" text="Form" / %}
+      <form style="display:grid;gap:12px;max-width:400px;margin-top:8px;">
+        {% component "text_field" label="Name" name="name" required=True / %}
+        {% component "text_field" label="Bio" name="bio" rows=4 helper="Tell us about yourself." / %}
+        {% component "checkbox" name="subscribe" label="Email me product updates" checked=True / %}
+        {% component "button" label="Submit" variant="raised" type="submit" / %}
+      </form>
+    </section>
+
+    <section style="padding: 16px 0;">
+      {% component "typography" variant="headline-medium" tag="h2" text="Alerts" / %}
+      <div style="display:grid;gap:12px;margin-top:8px;">
+        {% component "alert" severity="success" title="Saved" message="Your changes were saved." / %}
+        {% component "alert" severity="warning" title="Heads up" message="Your trial expires in 3 days." / %}
+      </div>
+    </section>
+  {% endcomponent %}
+{% endblock %}

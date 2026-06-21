@@ -1,0 +1,12 @@
+{% load djangd %}<button
+  class="mdc-fab djangd-fab {% if extended %}mdc-fab--extended{% endif %} {% if mini %}mdc-fab--mini{% endif %} {% if exited %}mdc-fab--exited{% endif %} {{ extra_classes }}"
+  type="button"
+  aria-label="{{ label }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}
+>
+  <span class="mdc-fab__ripple"></span>
+  <span class="mdc-fab__focus-ring"></span>
+  <span class="material-icons mdc-fab__icon" aria-hidden="true">{{ icon }}</span>
+  {% if extended %}<span class="mdc-fab__label">{{ label }}</span>{% endif %}
+</button>

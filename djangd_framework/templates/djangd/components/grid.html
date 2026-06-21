@@ -1,0 +1,10 @@
+{% load djangd %}<div class="djangd-grid djangd-grid--cols-{{ columns }} djangd-grid--gap-{{ gap }} {{ extra_classes }}"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  {% for item in items %}
+    <div class="djangd-grid__cell {% if item.span %}djangd-grid__cell--span-{{ item.span }}{% endif %}">
+      {{ item.content|safe }}
+    </div>
+  {% endfor %}
+  {{ children }}
+</div>

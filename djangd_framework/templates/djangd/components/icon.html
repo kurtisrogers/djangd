@@ -1,0 +1,4 @@
+{% load djangd %}<i class="material-icons djangd-icon {% if size %}djangd-icon--{{ size }}{% endif %} {{ extra_classes }}"
+   {% if label %}aria-label="{{ label }}" role="img"{% else %}aria-hidden="true"{% endif %}
+   {% if id %}id="{{ id }}"{% endif %}
+   {{ attrs|djangd_attrs }}>{{ name }}</i>

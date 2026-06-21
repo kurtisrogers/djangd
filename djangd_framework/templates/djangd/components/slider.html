@@ -1,0 +1,28 @@
+{% load djangd %}{% with sl_id=id|default:"djangd-sl"|add:"-"|add:name %}
+<div class="mdc-slider djangd-slider {% if discrete %}mdc-slider--discrete{% endif %} {% if disabled %}mdc-slider--disabled{% endif %} {{ extra_classes }}">
+  <input
+    class="mdc-slider__input"
+    type="range"
+    id="{{ sl_id }}"
+    name="{{ name }}"
+    min="{{ min }}"
+    max="{{ max }}"
+    step="{{ step }}"
+    value="{{ value }}"
+    aria-label="{{ label }}"
+    {% if disabled %}disabled{% endif %}
+    {{ attrs|djangd_attrs }}
+  />
+  <div class="mdc-slider__track">
+    <div class="mdc-slider__track--inactive"></div>
+    <div class="mdc-slider__track--active">
+      <div class="mdc-slider__track--active_fill"></div>
+    </div>
+  </div>
+  <div class="mdc-slider__thumb">
+    {% if discrete %}<div class="mdc-slider__value-indicator-container" aria-hidden="true"><div class="mdc-slider__value-indicator"><span class="mdc-slider__value-indicator-text">{{ value }}</span></div></div>{% endif %}
+    <div class="mdc-slider__thumb-knob"></div>
+    <div class="mdc-slider__focus-ring"></div>
+  </div>
+</div>
+{% endwith %}

@@ -1,0 +1,16 @@
+{% load djangd %}<nav class="djangd-breadcrumbs {{ extra_classes }}" aria-label="Breadcrumb"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  <ol class="djangd-breadcrumbs__list">
+    {% for item in items %}
+      <li class="djangd-breadcrumbs__item">
+        {% if item.href and not forloop.last %}
+          <a class="djangd-breadcrumbs__link" href="{{ item.href }}">{{ item.label }}</a>
+        {% else %}
+          <span class="djangd-breadcrumbs__current" aria-current="page">{{ item.label }}</span>
+        {% endif %}
+        {% if not forloop.last %}<span class="djangd-breadcrumbs__separator" aria-hidden="true">{{ separator }}</span>{% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+</nav>

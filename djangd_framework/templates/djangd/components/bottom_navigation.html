@@ -1,0 +1,12 @@
+{% load djangd %}<nav class="djangd-bottom-navigation {{ extra_classes }}" role="navigation" aria-label="Bottom navigation"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  {% for item in items %}
+    <a href="{{ item.href|default:'#' }}"
+       class="djangd-bottom-navigation__item {% if forloop.counter0 == active %}djangd-bottom-navigation__item--active{% endif %}"
+       {% if forloop.counter0 == active %}aria-current="page"{% endif %}>
+      <i class="material-icons djangd-bottom-navigation__icon" aria-hidden="true">{{ item.icon }}</i>
+      <span class="djangd-bottom-navigation__label">{{ item.label }}</span>
+    </a>
+  {% endfor %}
+</nav>

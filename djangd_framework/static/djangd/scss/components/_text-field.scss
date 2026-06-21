@@ -1,0 +1,52 @@
+.djangd-text-field,
+.mdc-text-field {
+  --djangd-tf-bg: var(--djangd-color-surface-variant);
+  --djangd-tf-fg: var(--djangd-color-on-surface);
+  --djangd-tf-border: var(--djangd-color-outline);
+
+  display: inline-flex; flex-direction: column;
+  position: relative;
+  min-width: 200px;
+  padding: var(--djangd-space-3) var(--djangd-space-4);
+  background: var(--djangd-tf-bg);
+  border-radius: var(--djangd-radius-sm) var(--djangd-radius-sm) 0 0;
+  color: var(--djangd-tf-fg);
+  border-bottom: 1px solid var(--djangd-tf-border);
+
+  &--outlined {
+    background: transparent;
+    border-radius: var(--djangd-radius-sm);
+    border: 1px solid var(--djangd-tf-border);
+    padding: var(--djangd-space-2) var(--djangd-space-4);
+  }
+
+  &--invalid {
+    --djangd-tf-border: var(--djangd-color-error);
+    color: var(--djangd-color-error);
+  }
+  &--disabled { opacity: .38; pointer-events: none; }
+
+  &__input,
+  .mdc-text-field__input {
+    background: transparent; border: 0; outline: 0;
+    color: inherit; font: inherit;
+    padding: var(--djangd-space-3) 0 var(--djangd-space-1);
+    width: 100%;
+  }
+  &__input:focus { outline: none; }
+
+  .mdc-floating-label {
+    position: absolute; top: 4px; left: var(--djangd-space-4);
+    font-size: var(--djangd-text-body-small);
+    color: var(--djangd-color-on-surface-variant);
+    pointer-events: none;
+  }
+}
+
+.mdc-text-field-helper-line {
+  font-size: var(--djangd-text-body-small);
+  color: var(--djangd-color-on-surface-variant);
+  padding: var(--djangd-space-1) var(--djangd-space-4);
+
+  .mdc-text-field-helper-text--validation-msg { color: var(--djangd-color-error); }
+}

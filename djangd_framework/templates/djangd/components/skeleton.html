@@ -1,0 +1,15 @@
+{% load djangd %}{% if variant == "text" %}
+  <div class="djangd-skeleton djangd-skeleton--text djangd-skeleton--animation-{{ animation }} {{ extra_classes }}"
+       role="status"
+       aria-label="Loading…"
+       {{ attrs|djangd_attrs }}>
+    {% for _ in lines|rjust:lines %}{% endfor %}
+    {% for _ in "x"|rjust:lines %}<div class="djangd-skeleton__line"></div>{% endfor %}
+  </div>
+{% else %}
+  <div class="djangd-skeleton djangd-skeleton--{{ variant }} djangd-skeleton--animation-{{ animation }} {{ extra_classes }}"
+       role="status"
+       aria-label="Loading…"
+       style="{% if width %}width:{{ width }};{% endif %}{% if height %}height:{{ height }};{% endif %}"
+       {{ attrs|djangd_attrs }}></div>
+{% endif %}

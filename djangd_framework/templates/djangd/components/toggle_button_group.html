@@ -1,0 +1,17 @@
+{% load djangd %}<div class="mdc-segmented-button djangd-toggle-group {{ extra_classes }}"
+     role="{% if exclusive %}radiogroup{% else %}group{% endif %}"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  {% for item in items %}
+    <button class="mdc-segmented-button__segment djangd-toggle-group__segment {% if item.value == value %}mdc-segmented-button__segment--selected{% endif %}"
+            type="button"
+            role="{% if exclusive %}radio{% else %}button{% endif %}"
+            aria-checked="{% if item.value == value %}true{% else %}false{% endif %}"
+            aria-pressed="{% if not exclusive and item.value == value %}true{% else %}false{% endif %}"
+            data-value="{{ item.value }}">
+      {% if item.icon %}<i class="material-icons mdc-segmented-button__icon" aria-hidden="true">{{ item.icon }}</i>{% endif %}
+      <span class="mdc-segmented-button__label">{{ item.label }}</span>
+    </button>
+  {% endfor %}
+  <input type="hidden" name="{{ name }}" value="{{ value|default:'' }}" />
+</div>

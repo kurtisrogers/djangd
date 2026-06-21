@@ -1,0 +1,24 @@
+{% load djangd %}{% with dlg_id=id|default:"djangd-dialog" %}
+<div class="mdc-dialog djangd-dialog {{ extra_classes }}"
+     id="{{ dlg_id }}"
+     data-mdc-dialog-scrim-click-action="{{ scrim_click_action }}"
+     data-mdc-dialog-escape-key-action="{{ escape_key_action }}"
+     {{ attrs|djangd_attrs }}>
+  <div class="mdc-dialog__container">
+    <div class="mdc-dialog__surface"
+         role="alertdialog"
+         aria-modal="true"
+         aria-labelledby="{{ dlg_id }}-title"
+         aria-describedby="{{ dlg_id }}-content">
+      {% if title %}<h2 class="mdc-dialog__title" id="{{ dlg_id }}-title">{{ title }}</h2>{% endif %}
+      <div class="mdc-dialog__content" id="{{ dlg_id }}-content">{{ children }}</div>
+      {% if actions %}
+        <div class="mdc-dialog__actions">
+          {% for action in actions %}{{ action|safe }}{% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="mdc-dialog__scrim"></div>
+</div>
+{% endwith %}

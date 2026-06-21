@@ -1,0 +1,80 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Introduction" />
+
+# djangd-framework
+
+A Django component library based on **Material Design (MDC Web)**, with:
+
+- **BEM** class names everywhere (`.djangd-card__media`, `.mdc-button--raised`).
+- **WCAG 2.1 AA** accessibility by default (focus rings, ARIA, prefers-reduced-motion).
+- **CSS custom-property** theming — restyle anything without rebuilding Sass.
+- A **single source of truth** for the markup of every component (Django
+  template). Drop `{% component "card" ... %}` in any page.
+- An **extensible registry**: subclass or override components from your own
+  Django app and register them under any name.
+
+## Using a component
+
+```django
+{% load djangd %}
+
+{# Self-closing — note the trailing slash. #}
+{% component "button" label="Save changes" variant="raised" / %}
+```
+
+```django
+{% component "card" outlined=True %}
+  {% component "typography" variant="title-large" text="Hello world" tag="h2" / %}
+  <p>Body copy.</p>
+{% endcomponent %}
+```
+
+## Registering your own
+
+```python
+# my_app/components.py
+from djangd_framework import Component, register
+
+@register
+class Alert(Component):
+    name = "my.alert"
+    template = "my_app/alert.html"
+    defaults = {"severity": "info"}
+    required_props = ("message",)
+```
+
+```django
+{% load djangd %}
+{% component "my.alert" severity="warning" message="Heads up!" / %}
+```
+
+## Overriding a built-in
+
+```python
+from djangd_framework import Component, register
+
+@register(replace=True)
+class Button(Component):
+    name = "button"
+    template = "my_app/button.html"  # your own markup
+```
+
+Every built-in keeps its public prop names, so the rest of your codebase keeps
+working.
+
+## Theming
+
+```css
+:root {
+  --djangd-color-primary: #c2185b;
+  --djangd-radius-md: 4px;
+  --djangd-font-family: "Inter", sans-serif;
+}
+
+/* Or scope to a single region */
+.marketing { --djangd-color-primary: #2e7d32; }
+```
+
+Apply `data-djangd-theme="dark"` on `<html>` (or any wrapper) to opt into the
+dark palette.

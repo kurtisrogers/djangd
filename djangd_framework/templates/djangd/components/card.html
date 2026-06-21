@@ -1,0 +1,17 @@
+{% load djangd %}<div class="mdc-card djangd-card {% if outlined %}mdc-card--outlined{% endif %} {{ extra_classes }}"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  {% if media %}
+    <div class="mdc-card__media mdc-card__media--16-9 djangd-card__media" style="background-image: url('{{ media }}');" role="img" aria-label="{{ media_alt }}"></div>
+  {% endif %}
+  <div class="mdc-card__content djangd-card__content">
+    {{ children }}
+  </div>
+  {% if actions %}
+    <div class="mdc-card__actions djangd-card__actions">
+      <div class="mdc-card__action-buttons">
+        {% for action in actions %}{{ action|safe }}{% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</div>

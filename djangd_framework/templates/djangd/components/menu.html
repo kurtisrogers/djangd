@@ -1,0 +1,17 @@
+{% load djangd %}<div class="mdc-menu mdc-menu-surface djangd-menu {% if open %}mdc-menu-surface--open{% endif %} {{ extra_classes }}"
+     {% if id %}id="{{ id }}"{% endif %}
+     {{ attrs|djangd_attrs }}>
+  <ul class="mdc-deprecated-list" role="menu" aria-orientation="vertical" tabindex="-1">
+    {% for item in items %}
+      {% if item.divider %}
+        <li class="mdc-deprecated-list-divider" role="separator"></li>
+      {% else %}
+        <li class="mdc-deprecated-list-item" role="menuitem" tabindex="0" {% if item.disabled %}aria-disabled="true"{% endif %}>
+          <span class="mdc-deprecated-list-item__ripple"></span>
+          {% if item.icon %}<i class="material-icons mdc-deprecated-list-item__graphic" aria-hidden="true">{{ item.icon }}</i>{% endif %}
+          <span class="mdc-deprecated-list-item__text">{{ item.label }}</span>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>

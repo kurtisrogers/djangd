@@ -1,0 +1,127 @@
+// =============================================================================
+// Design tokens
+//
+// djangd-framework exposes every value through a CSS custom property so end
+// users can override anything *without* needing a Sass build. The Sass
+// variables are convenience defaults — they only set the CSS custom property
+// if the user has not already done so.
+//
+// Override examples:
+//
+//   :root {
+//     --djangd-color-primary: #6750a4;
+//     --djangd-radius-md: 12px;
+//   }
+//
+//   // Or scoped to a single page region:
+//   .marketing { --djangd-color-primary: #c2185b; }
+//
+// =============================================================================
+
+@use "sass:meta";
+
+/// Helper that emits `--name: $value` only if you don't pass `null`.
+@mixin token($name, $value) {
+  @if $value != null {
+    --djangd-#{$name}: #{$value};
+  }
+}
+
+:root {
+  // ---- Colour: Material 3 baseline palette --------------------------------
+  --djangd-color-primary:        #6750a4;
+  --djangd-color-on-primary:     #ffffff;
+  --djangd-color-primary-container: #eaddff;
+  --djangd-color-on-primary-container: #21005d;
+
+  --djangd-color-secondary:      #625b71;
+  --djangd-color-on-secondary:   #ffffff;
+  --djangd-color-secondary-container: #e8def8;
+
+  --djangd-color-tertiary:       #7d5260;
+  --djangd-color-error:          #b3261e;
+  --djangd-color-on-error:       #ffffff;
+  --djangd-color-success:        #2e7d32;
+  --djangd-color-warning:        #ed6c02;
+  --djangd-color-info:           #0288d1;
+
+  --djangd-color-background:     #fffbfe;
+  --djangd-color-on-background:  #1c1b1f;
+  --djangd-color-surface:        #fffbfe;
+  --djangd-color-on-surface:     #1c1b1f;
+  --djangd-color-surface-variant:#e7e0ec;
+  --djangd-color-on-surface-variant:#49454f;
+  --djangd-color-outline:        #79747e;
+
+  // ---- Typography ----------------------------------------------------------
+  --djangd-font-family:          "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --djangd-font-family-mono:     "Roboto Mono", ui-monospace, monospace;
+
+  --djangd-text-display-large:   3.5625rem;
+  --djangd-text-display-medium:  2.8125rem;
+  --djangd-text-display-small:   2.25rem;
+  --djangd-text-headline-large:  2rem;
+  --djangd-text-headline-medium: 1.75rem;
+  --djangd-text-headline-small:  1.5rem;
+  --djangd-text-title-large:     1.375rem;
+  --djangd-text-title-medium:    1rem;
+  --djangd-text-title-small:     .875rem;
+  --djangd-text-body-large:      1rem;
+  --djangd-text-body-medium:     .875rem;
+  --djangd-text-body-small:      .75rem;
+  --djangd-text-label-large:     .875rem;
+  --djangd-text-label-medium:    .75rem;
+  --djangd-text-label-small:     .6875rem;
+
+  // ---- Spacing / radii / motion -------------------------------------------
+  --djangd-space-0:  0;
+  --djangd-space-1:  .25rem;
+  --djangd-space-2:  .5rem;
+  --djangd-space-3:  .75rem;
+  --djangd-space-4:  1rem;
+  --djangd-space-5:  1.5rem;
+  --djangd-space-6:  2rem;
+  --djangd-space-7:  3rem;
+
+  --djangd-radius-xs: 4px;
+  --djangd-radius-sm: 8px;
+  --djangd-radius-md: 12px;
+  --djangd-radius-lg: 16px;
+  --djangd-radius-xl: 28px;
+  --djangd-radius-pill: 9999px;
+
+  --djangd-motion-fast: 120ms;
+  --djangd-motion-base: 200ms;
+  --djangd-motion-slow: 320ms;
+  --djangd-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --djangd-easing-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1);
+
+  // ---- Elevation shadows ---------------------------------------------------
+  --djangd-elevation-1: 0 1px 2px rgba(0,0,0,.3), 0 1px 3px 1px rgba(0,0,0,.15);
+  --djangd-elevation-2: 0 1px 2px rgba(0,0,0,.3), 0 2px 6px 2px rgba(0,0,0,.15);
+  --djangd-elevation-3: 0 4px 8px 3px rgba(0,0,0,.15), 0 1px 3px rgba(0,0,0,.3);
+  --djangd-elevation-4: 0 6px 10px 4px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.3);
+  --djangd-elevation-5: 0 8px 12px 6px rgba(0,0,0,.15), 0 4px 4px rgba(0,0,0,.3);
+
+  // ---- Focus ring (WCAG 2.1 AA: visible focus indicator, 3:1 contrast) -----
+  --djangd-focus-ring-width: 3px;
+  --djangd-focus-ring-color: currentColor;
+  --djangd-focus-ring-offset: 2px;
+}
+
+// Dark theme — applied via [data-djangd-theme="dark"] on <html> or a region.
+[data-djangd-theme="dark"] {
+  --djangd-color-primary:        #d0bcff;
+  --djangd-color-on-primary:     #381e72;
+  --djangd-color-primary-container: #4f378b;
+  --djangd-color-on-primary-container: #eaddff;
+  --djangd-color-secondary:      #ccc2dc;
+  --djangd-color-on-secondary:   #332d41;
+  --djangd-color-background:     #1c1b1f;
+  --djangd-color-on-background:  #e6e1e5;
+  --djangd-color-surface:        #1c1b1f;
+  --djangd-color-on-surface:     #e6e1e5;
+  --djangd-color-surface-variant:#49454f;
+  --djangd-color-on-surface-variant:#cac4d0;
+  --djangd-color-outline:        #938f99;
+}

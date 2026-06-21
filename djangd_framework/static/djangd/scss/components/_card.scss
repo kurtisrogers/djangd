@@ -1,0 +1,30 @@
+.djangd-card,
+.mdc-card {
+  background: var(--djangd-color-surface);
+  color: var(--djangd-color-on-surface);
+  border-radius: var(--djangd-radius-md);
+  @include djangd-elevation(1);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+
+  &--outlined { box-shadow: none; border: 1px solid var(--djangd-color-outline); }
+
+  &__media     { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; }
+  &__content   { padding: var(--djangd-space-4); }
+  &__actions   {
+    display: flex; align-items: center; gap: var(--djangd-space-2);
+    padding: var(--djangd-space-2) var(--djangd-space-3);
+    border-top: 1px solid var(--djangd-color-surface-variant);
+  }
+}
+
+.djangd-paper {
+  background: var(--djangd-color-surface);
+  border-radius: var(--djangd-radius-md);
+  padding: var(--djangd-space-4);
+  @include djangd-elevation(1);
+
+  @for $i from 0 through 5 {
+    &--elevation-#{$i} { box-shadow: var(--djangd-elevation-#{$i}, none); }
+  }
+}

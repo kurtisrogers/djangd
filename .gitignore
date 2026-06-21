@@ -1,0 +1,25 @@
+# Node
+node_modules/
+storybook-static/
+docs/storybook/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+.venv/
+venv/
+
+# Django
+db.sqlite3
+*.log
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/

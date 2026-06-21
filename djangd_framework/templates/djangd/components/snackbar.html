@@ -1,0 +1,15 @@
+{% load djangd %}<aside class="mdc-snackbar djangd-snackbar {% if leading %}mdc-snackbar--leading{% endif %} {% if stacked %}mdc-snackbar--stacked{% endif %} {{ extra_classes }}"
+       {% if id %}id="{{ id }}"{% endif %}
+       {{ attrs|djangd_attrs }}>
+  <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+    <div class="mdc-snackbar__label" aria-atomic="false">{{ message }}</div>
+    {% if action_label %}
+      <div class="mdc-snackbar__actions" aria-atomic="true">
+        <button type="button" class="mdc-button mdc-snackbar__action">
+          <span class="mdc-button__ripple"></span>
+          <span class="mdc-button__label">{{ action_label }}</span>
+        </button>
+      </div>
+    {% endif %}
+  </div>
+</aside>

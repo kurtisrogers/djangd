@@ -1,0 +1,23 @@
+{% load djangd %}{% with rb_id=id|default:"djangd-rb"|add:"-"|add:name|add:"-"|add:value %}
+<div class="mdc-form-field djangd-form-field {{ extra_classes }}">
+  <div class="mdc-radio djangd-radio {% if disabled %}mdc-radio--disabled{% endif %}">
+    <input
+      type="radio"
+      class="mdc-radio__native-control"
+      id="{{ rb_id }}"
+      name="{{ name }}"
+      value="{{ value }}"
+      {% if checked %}checked{% endif %}
+      {% if disabled %}disabled{% endif %}
+      {{ attrs|djangd_attrs }}
+    />
+    <div class="mdc-radio__background">
+      <div class="mdc-radio__outer-circle"></div>
+      <div class="mdc-radio__inner-circle"></div>
+    </div>
+    <div class="mdc-radio__ripple"></div>
+    <div class="mdc-radio__focus-ring"></div>
+  </div>
+  {% if label %}<label for="{{ rb_id }}">{{ label }}</label>{% endif %}
+</div>
+{% endwith %}

@@ -1,0 +1,26 @@
+{% load djangd %}{% with cb_id=id|default:"djangd-cb"|add:"-"|add:name %}
+<div class="mdc-form-field djangd-form-field {{ extra_classes }}">
+  <div class="mdc-checkbox djangd-checkbox {% if disabled %}mdc-checkbox--disabled{% endif %}">
+    <input
+      type="checkbox"
+      class="mdc-checkbox__native-control"
+      id="{{ cb_id }}"
+      name="{{ name }}"
+      value="{{ value }}"
+      {% if checked %}checked{% endif %}
+      {% if disabled %}disabled{% endif %}
+      {% if indeterminate %}aria-checked="mixed"{% endif %}
+      {{ attrs|djangd_attrs }}
+    />
+    <div class="mdc-checkbox__background">
+      <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24" aria-hidden="true">
+        <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+      </svg>
+      <div class="mdc-checkbox__mixedmark"></div>
+    </div>
+    <div class="mdc-checkbox__ripple"></div>
+    <div class="mdc-checkbox__focus-ring"></div>
+  </div>
+  {% if label %}<label for="{{ cb_id }}">{{ label }}</label>{% endif %}
+</div>
+{% endwith %}

@@ -1,0 +1,5 @@
+{% load djangd %}{% spaceless %}<kbd
+  class="djangd-kbd djangd-kbd--{{ size }} {{ extra_classes }}"
+  {% if label %}aria-label="{{ label }}"{% endif %}
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>{% for key in keys %}<span class="djangd-kbd__key">{{ key }}</span>{% if not forloop.last %}<span class="djangd-kbd__sep" aria-hidden="true">{{ separator }}</span>{% endif %}{% endfor %}{% if text %}<span class="djangd-kbd__key">{{ text }}</span>{% endif %}{{ children }}</kbd>{% endspaceless %}

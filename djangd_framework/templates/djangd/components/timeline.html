@@ -1,0 +1,18 @@
+{% load djangd %}<ol
+  class="djangd-timeline djangd-timeline--{{ orientation }} djangd-timeline--{{ align }} {{ extra_classes }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {% if label %}aria-label="{{ label }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  {% for item in items %}
+    <li class="djangd-timeline__item {% if item.active %}djangd-timeline__item--active{% endif %}">
+      <div class="djangd-timeline__marker">
+        {% if item.icon %}<i class="material-icons" aria-hidden="true">{{ item.icon }}</i>{% else %}<span class="djangd-timeline__dot" aria-hidden="true"></span>{% endif %}
+      </div>
+      <div class="djangd-timeline__content">
+        {% if item.time %}<time class="djangd-timeline__time" {% if item.datetime %}datetime="{{ item.datetime }}"{% endif %}>{{ item.time }}</time>{% endif %}
+        {% if item.title %}<div class="djangd-timeline__title">{{ item.title }}</div>{% endif %}
+        {% if item.description %}<div class="djangd-timeline__description">{{ item.description }}</div>{% endif %}
+      </div>
+    </li>
+  {% endfor %}
+</ol>

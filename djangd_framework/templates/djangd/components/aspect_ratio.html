@@ -1,0 +1,7 @@
+{% load djangd %}<div
+  class="djangd-aspect-ratio {{ extra_classes }}"
+  style="aspect-ratio: {{ ratio }};"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  {{ children }}
+</div>

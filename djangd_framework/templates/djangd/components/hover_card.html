@@ -1,0 +1,11 @@
+{% load djangd %}<span
+  class="djangd-hover-card {{ extra_classes }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  <span class="djangd-hover-card__trigger" tabindex="0" aria-describedby="{{ id|default:'djangd-hovercard' }}-content">{{ trigger }}</span>
+  <span class="djangd-hover-card__panel djangd-hover-card__panel--{{ placement }}"
+        role="tooltip"
+        id="{{ id|default:'djangd-hovercard' }}-content">
+    <span class="djangd-hover-card__surface">{{ children }}</span>
+  </span>
+</span>

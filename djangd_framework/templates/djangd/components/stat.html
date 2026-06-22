@@ -1,0 +1,22 @@
+{% load djangd %}<div
+  class="djangd-stat djangd-stat--{{ trend }} {{ extra_classes }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  {% if icon %}
+    <div class="djangd-stat__icon" aria-hidden="true">
+      <i class="material-icons">{{ icon }}</i>
+    </div>
+  {% endif %}
+  <div class="djangd-stat__body">
+    <div class="djangd-stat__label">{{ label }}</div>
+    <div class="djangd-stat__value">{{ value }}{% if unit %}<span class="djangd-stat__unit">{{ unit }}</span>{% endif %}</div>
+    {% if delta %}
+      <div class="djangd-stat__delta">
+        {% if trend == "up" %}<i class="material-icons" aria-hidden="true">arrow_upward</i>{% endif %}
+        {% if trend == "down" %}<i class="material-icons" aria-hidden="true">arrow_downward</i>{% endif %}
+        <span>{{ delta }}</span>
+        {% if delta_label %}<span class="djangd-stat__delta-label">{{ delta_label }}</span>{% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>

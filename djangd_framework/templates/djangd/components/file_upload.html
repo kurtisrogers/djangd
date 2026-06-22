@@ -1,0 +1,22 @@
+{% load djangd %}{% with input_id=id|default:"djangd-fu"|add:"-"|add:name %}
+<label
+  class="djangd-file-upload {% if disabled %}djangd-file-upload--disabled{% endif %} {{ extra_classes }}"
+  for="{{ input_id }}"
+  {{ attrs|djangd_attrs }}>
+  <input
+    class="djangd-file-upload__input"
+    type="file"
+    id="{{ input_id }}"
+    name="{{ name }}"
+    {% if accept %}accept="{{ accept }}"{% endif %}
+    {% if multiple %}multiple{% endif %}
+    {% if required %}required aria-required="true"{% endif %}
+    {% if disabled %}disabled{% endif %}
+  />
+  <span class="djangd-file-upload__surface" aria-hidden="true">
+    <i class="material-icons djangd-file-upload__icon" aria-hidden="true">{{ icon }}</i>
+    <span class="djangd-file-upload__title">{{ title }}</span>
+    {% if hint %}<span class="djangd-file-upload__hint">{{ hint }}</span>{% endif %}
+  </span>
+</label>
+{% endwith %}

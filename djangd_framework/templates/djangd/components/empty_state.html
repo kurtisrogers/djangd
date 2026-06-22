@@ -1,0 +1,20 @@
+{% load djangd %}<div
+  class="djangd-empty-state {{ extra_classes }}"
+  role="status"
+  aria-live="polite"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  {% if icon %}
+    <div class="djangd-empty-state__icon" aria-hidden="true">
+      <i class="material-icons">{{ icon }}</i>
+    </div>
+  {% endif %}
+  {% if title %}<h3 class="djangd-empty-state__title">{{ title }}</h3>{% endif %}
+  {% if description %}<p class="djangd-empty-state__description">{{ description }}</p>{% endif %}
+  {% if actions %}
+    <div class="djangd-empty-state__actions">
+      {% for action in actions %}{{ action|safe }}{% endfor %}
+    </div>
+  {% endif %}
+  {{ children }}
+</div>

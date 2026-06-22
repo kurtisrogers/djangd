@@ -1,0 +1,27 @@
+{% load djangd %}{% with input_id=id|default:"djangd-otp"|add:"-"|add:name %}
+<fieldset
+  class="djangd-input-otp {% if disabled %}djangd-input-otp--disabled{% endif %} {{ extra_classes }}"
+  role="group"
+  aria-labelledby="{{ input_id }}-legend"
+  {{ attrs|djangd_attrs }}>
+  <legend class="djangd-input-otp__legend" id="{{ input_id }}-legend">{{ label }}</legend>
+  <div class="djangd-input-otp__slots">
+    {% for slot in slots %}
+      <input
+        class="djangd-input-otp__slot"
+        id="{{ input_id }}-{{ forloop.counter }}"
+        name="{{ name }}[{{ forloop.counter0 }}]"
+        type="{% if mask %}password{% else %}text{% endif %}"
+        inputmode="numeric"
+        autocomplete="one-time-code"
+        maxlength="1"
+        pattern="[0-9]"
+        value="{{ slot }}"
+        aria-label="{{ label }} digit {{ forloop.counter }}"
+        {% if disabled %}disabled{% endif %}
+      />
+    {% endfor %}
+  </div>
+  {% if helper %}<div class="djangd-input-otp__helper">{{ helper }}</div>{% endif %}
+</fieldset>
+{% endwith %}

@@ -1,0 +1,25 @@
+{% load djangd %}{% with input_id=id|default:"djangd-dp"|add:"-"|add:name %}
+<div
+  class="djangd-date-picker {% if disabled %}djangd-date-picker--disabled{% endif %} {{ extra_classes }}"
+  {{ attrs|djangd_attrs }}>
+  <label class="djangd-date-picker__label" for="{{ input_id }}">
+    {{ label }}{% if required %} <span aria-hidden="true">*</span>{% endif %}
+  </label>
+  <div class="djangd-date-picker__field">
+    <input
+      class="djangd-date-picker__input mdc-text-field__input"
+      type="date"
+      id="{{ input_id }}"
+      name="{{ name }}"
+      value="{{ value }}"
+      {% if min_date %}min="{{ min_date }}"{% endif %}
+      {% if max_date %}max="{{ max_date }}"{% endif %}
+      {% if required %}required aria-required="true"{% endif %}
+      {% if disabled %}disabled{% endif %}
+      aria-describedby="{% if helper %}{{ input_id }}-helper{% endif %}"
+    />
+    <i class="material-icons djangd-date-picker__icon" aria-hidden="true">{{ icon }}</i>
+  </div>
+  {% if helper %}<div class="djangd-date-picker__helper" id="{{ input_id }}-helper">{{ helper }}</div>{% endif %}
+</div>
+{% endwith %}

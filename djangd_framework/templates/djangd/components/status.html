@@ -1,0 +1,9 @@
+{% load djangd %}<span
+  class="djangd-status djangd-status--{{ tone }} {% if pulse %}djangd-status--pulse{% endif %} {{ extra_classes }}"
+  role="status"
+  aria-label="{{ label|default:tone }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  <span class="djangd-status__dot" aria-hidden="true"></span>
+  {% if text %}<span class="djangd-status__text">{{ text }}</span>{% endif %}{{ children }}
+</span>

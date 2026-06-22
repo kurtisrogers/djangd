@@ -1,0 +1,42 @@
+{% load djangd %}<div
+  class="djangd-calendar {{ extra_classes }}"
+  role="application"
+  aria-label="{{ label|default:'Calendar' }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  <header class="djangd-calendar__header">
+    <button type="button" class="djangd-icon-button mdc-icon-button djangd-calendar__nav" aria-label="Previous month" data-nav="prev">
+      <i class="material-icons" aria-hidden="true">chevron_left</i>
+    </button>
+    <h3 class="djangd-calendar__title" aria-live="polite">{{ month }} {{ year }}</h3>
+    <button type="button" class="djangd-icon-button mdc-icon-button djangd-calendar__nav" aria-label="Next month" data-nav="next">
+      <i class="material-icons" aria-hidden="true">chevron_right</i>
+    </button>
+  </header>
+  <table class="djangd-calendar__grid" role="grid" aria-labelledby="">
+    <thead>
+      <tr role="row">
+        {% for day in weekdays %}
+          <th class="djangd-calendar__weekday" scope="col" abbr="{{ day }}">{{ day|slice:":2" }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for week in weeks %}
+        <tr role="row">
+          {% for cell in week %}
+            <td role="gridcell"
+                class="djangd-calendar__cell {% if cell.outside %}djangd-calendar__cell--outside{% endif %} {% if cell.today %}djangd-calendar__cell--today{% endif %} {% if cell.selected %}djangd-calendar__cell--selected{% endif %} {% if cell.disabled %}djangd-calendar__cell--disabled{% endif %}"
+                aria-selected="{% if cell.selected %}true{% else %}false{% endif %}">
+              {% if cell.disabled or cell.outside %}
+                <span class="djangd-calendar__day" aria-hidden="{% if cell.outside %}true{% else %}false{% endif %}">{{ cell.day }}</span>
+              {% else %}
+                <button type="button" class="djangd-calendar__day" data-date="{{ cell.iso }}">{{ cell.day }}</button>
+              {% endif %}
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,9 @@
+{% load djangd %}<div
+  class="djangd-scroll-area djangd-scroll-area--{{ orientation }} {{ extra_classes }}"
+  style="{% if max_height %}max-height: {{ max_height }};{% endif %}{% if max_width %}max-width: {{ max_width }};{% endif %}"
+  tabindex="0"
+  {% if label %}aria-label="{{ label }}"{% endif %}
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  <div class="djangd-scroll-area__viewport">{{ children }}</div>
+</div>

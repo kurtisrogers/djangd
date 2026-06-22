@@ -465,3 +465,265 @@ _make(
     },
     required=("href",),
 )
+
+# ---------------------------------------------------------------------------
+# Inputs (modern): input_otp, file_upload, toggle, date_picker
+# ---------------------------------------------------------------------------
+_make(
+    "input_otp",
+    "djangd/components/input_otp.html",
+    defaults={
+        "label": "Verification code",
+        "name": "otp",
+        # Length is controlled by the number of items in `slots`. Each slot's
+        # value is rendered into the corresponding <input value="…">.
+        "slots": ("", "", "", "", "", ""),
+        "mask": False,
+        "helper": "",
+        "disabled": False,
+        "id": None,
+    },
+    required=("name",),
+)
+_make(
+    "file_upload",
+    "djangd/components/file_upload.html",
+    defaults={
+        "name": "file",
+        "title": "Click to upload or drag and drop",
+        "hint": "",
+        "icon": "cloud_upload",
+        "accept": "",
+        "multiple": False,
+        "required": False,
+        "disabled": False,
+        "id": None,
+    },
+    required=("name",),
+)
+_make(
+    "toggle",
+    "djangd/components/toggle.html",
+    defaults={
+        "text": "",
+        "icon": None,
+        "label": "",        # aria-label for icon-only toggles
+        "pressed": False,
+        "variant": "ghost", # ghost | outline
+        "size": "medium",   # small | medium | large
+        "disabled": False,
+        "id": None,
+    },
+)
+_make(
+    "date_picker",
+    "djangd/components/date_picker.html",
+    defaults={
+        "label": "Date",
+        "name": "date",
+        "value": "",
+        "min_date": "",
+        "max_date": "",
+        "helper": "",
+        "icon": "event",
+        "required": False,
+        "disabled": False,
+        "id": None,
+    },
+    required=("name",),
+)
+
+# ---------------------------------------------------------------------------
+# Data display (modern): timeline, tree_view, stat, avatar_group, kbd, status,
+# calendar
+# ---------------------------------------------------------------------------
+_make(
+    "timeline",
+    "djangd/components/timeline.html",
+    defaults={
+        "items": (),  # iterable of {time, datetime, title, description, icon, active}
+        "orientation": "vertical",  # vertical | horizontal
+        "align": "start",           # start | center
+        "label": "",
+        "id": None,
+    },
+    required=("items",),
+)
+_make(
+    "tree_view",
+    "djangd/components/tree_view.html",
+    defaults={
+        "nodes": (),  # iterable of {label, icon, expanded, selected, children}
+        "label": "",
+        "id": None,
+    },
+    required=("nodes",),
+)
+_make(
+    "stat",
+    "djangd/components/stat.html",
+    defaults={
+        "label": "",
+        "value": "",
+        "unit": "",
+        "delta": "",
+        "delta_label": "",
+        "trend": "flat",  # up | down | flat
+        "icon": None,
+        "id": None,
+    },
+    required=("label", "value"),
+)
+_make(
+    "avatar_group",
+    "djangd/components/avatar_group.html",
+    defaults={
+        "avatars": (),  # iterable of {src, alt, initials}
+        "max": 4,
+        "size": "medium",   # small | medium | large
+        "shape": "circle",  # circle | rounded | square
+        "label": "",
+        "id": None,
+    },
+    required=("avatars",),
+)
+_make(
+    "kbd",
+    "djangd/components/kbd.html",
+    defaults={
+        "keys": (),        # iterable of strings — each rendered as a key cap
+        "text": "",        # single key shortcut as plain text (alt to `keys`)
+        "separator": "+",
+        "size": "md",      # sm | md | lg
+        "label": "",
+        "id": None,
+    },
+)
+_make(
+    "status",
+    "djangd/components/status.html",
+    defaults={
+        "text": "",
+        "tone": "neutral",  # online | offline | busy | away | success | warning | error | info | neutral
+        "pulse": False,
+        "label": "",
+        "id": None,
+    },
+)
+_make(
+    "calendar",
+    "djangd/components/calendar.html",
+    defaults={
+        "month": "",
+        "year": "",
+        "weekdays": ("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"),
+        # weeks is an iterable of weeks (iterables of cells). Each cell is a
+        # mapping: {day, iso, outside, today, selected, disabled}.
+        "weeks": (),
+        "label": "Calendar",
+        "id": None,
+    },
+    required=("weeks",),
+)
+
+# ---------------------------------------------------------------------------
+# Overlays (modern): hover_card, sheet, command, empty_state
+# ---------------------------------------------------------------------------
+_make(
+    "hover_card",
+    "djangd/components/hover_card.html",
+    defaults={
+        "trigger": "",          # inline content for the trigger
+        "placement": "bottom",  # top | bottom | left | right
+        "id": None,
+    },
+)
+_make(
+    "sheet",
+    "djangd/components/sheet.html",
+    defaults={
+        "open": False,
+        "side": "right",  # left | right | top | bottom
+        "title": "",
+        "dismissible": True,
+        "actions": (),    # iterable of pre-rendered HTML strings
+        "id": None,
+    },
+)
+_make(
+    "command",
+    "djangd/components/command.html",
+    defaults={
+        "open": False,
+        "placeholder": "Type a command or search…",
+        "label": "Command palette",
+        # groups: iterable of {heading, commands: [{label, icon, shortcut, value}]}
+        # NB: `commands` (not `items`) avoids colliding with dict.items() during
+        # Django template variable resolution.
+        "groups": (),
+        "empty": "No results.",
+        "id": None,
+    },
+    required=("groups",),
+)
+_make(
+    "empty_state",
+    "djangd/components/empty_state.html",
+    defaults={
+        "title": "",
+        "description": "",
+        "icon": "inbox",
+        "actions": (),
+        "id": None,
+    },
+)
+
+# ---------------------------------------------------------------------------
+# Layout (modern): aspect_ratio, scroll_area, toolbar, carousel, visually_hidden
+# ---------------------------------------------------------------------------
+_make(
+    "aspect_ratio",
+    "djangd/components/aspect_ratio.html",
+    defaults={"ratio": "16 / 9", "id": None},
+)
+_make(
+    "scroll_area",
+    "djangd/components/scroll_area.html",
+    defaults={
+        "orientation": "vertical",  # vertical | horizontal | both
+        "max_height": "",
+        "max_width": "",
+        "label": "",
+        "id": None,
+    },
+)
+_make(
+    "toolbar",
+    "djangd/components/toolbar.html",
+    defaults={
+        "items": (),          # iterable of pre-rendered HTML strings
+        "density": "regular", # dense | regular | spacious
+        "orientation": "horizontal",  # horizontal | vertical
+        "elevated": False,
+        "label": "",
+        "id": None,
+    },
+)
+_make(
+    "carousel",
+    "djangd/components/carousel.html",
+    defaults={
+        "slides": (),         # iterable of {image, alt, caption, html}
+        "active": 0,
+        "controls": True,
+        "indicators": True,
+        "label": "Carousel",
+        "id": None,
+    },
+    required=("slides",),
+)
+_make(
+    "visually_hidden",
+    "djangd/components/visually_hidden.html",
+    defaults={"tag": "span", "text": "", "id": None},
+)

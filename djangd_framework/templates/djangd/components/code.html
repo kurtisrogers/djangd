@@ -1,0 +1,5 @@
+{% load djangd %}<pre
+  class="djangd-code djangd-code--{{ language|default:'text' }} {% if line_numbers %}djangd-code--lines{% endif %} {{ extra_classes }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {% if title %}aria-label="{{ title }}"{% endif %}
+  {{ attrs|djangd_attrs }}><code data-language="{{ language|default:'text' }}">{{ code }}{{ children }}</code></pre>

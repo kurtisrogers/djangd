@@ -1,0 +1,22 @@
+{% load djangd %}{% with input_id=id|default:"djangd-cp"|add:"-"|add:name %}
+<div
+  class="djangd-color-picker {% if disabled %}djangd-color-picker--disabled{% endif %} {{ extra_classes }}"
+  {{ attrs|djangd_attrs }}>
+  <label class="djangd-color-picker__label" for="{{ input_id }}">
+    {{ label }}{% if required %} <span aria-hidden="true">*</span>{% endif %}
+  </label>
+  <div class="djangd-color-picker__field">
+    <input
+      class="djangd-color-picker__input"
+      type="color"
+      id="{{ input_id }}"
+      name="{{ name }}"
+      value="{{ value }}"
+      {% if required %}required aria-required="true"{% endif %}
+      {% if disabled %}disabled{% endif %}
+    />
+    <code class="djangd-color-picker__hex" aria-hidden="true">{{ value }}</code>
+  </div>
+  {% if helper %}<div class="djangd-color-picker__helper">{{ helper }}</div>{% endif %}
+</div>
+{% endwith %}

@@ -1,0 +1,32 @@
+{% load djangd %}{% with input_id=id|default:"djangd-nf"|add:"-"|add:name %}
+<div
+  class="djangd-number-field {% if disabled %}djangd-number-field--disabled{% endif %} {{ extra_classes }}"
+  {{ attrs|djangd_attrs }}>
+  <label class="djangd-number-field__label" for="{{ input_id }}">
+    {{ label }}{% if required %} <span aria-hidden="true">*</span>{% endif %}
+  </label>
+  <div class="djangd-number-field__field" role="group" aria-labelledby="{{ input_id }}">
+    <button type="button" class="djangd-number-field__btn" aria-label="Decrease" data-step="-1" {% if disabled %}disabled{% endif %}>
+      <i class="material-icons" aria-hidden="true">remove</i>
+    </button>
+    <input
+      class="djangd-number-field__input mdc-text-field__input"
+      type="number"
+      id="{{ input_id }}"
+      name="{{ name }}"
+      value="{{ value }}"
+      step="{{ step }}"
+      {% if min_value is not None %}min="{{ min_value }}"{% endif %}
+      {% if max_value is not None %}max="{{ max_value }}"{% endif %}
+      {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+      {% if required %}required aria-required="true"{% endif %}
+      {% if disabled %}disabled{% endif %}
+      inputmode="numeric"
+    />
+    <button type="button" class="djangd-number-field__btn" aria-label="Increase" data-step="1" {% if disabled %}disabled{% endif %}>
+      <i class="material-icons" aria-hidden="true">add</i>
+    </button>
+  </div>
+  {% if helper %}<div class="djangd-number-field__helper">{{ helper }}</div>{% endif %}
+</div>
+{% endwith %}

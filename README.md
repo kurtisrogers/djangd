@@ -89,23 +89,69 @@ Component-specific props are documented in Storybook.
 
 ## Built-in components
 
-Inputs & actions: `button`, `icon_button`, `fab`, `chip`, `text_field`,
-`checkbox`, `radio`, `switch`, `select`, `slider`, `form_field`,
-`toggle_button_group`, `rating`
+The framework ships **72+ components** grouped by purpose:
 
-Surfaces: `card`, `paper`, `divider`, `elevation`
+| Group       | Components |
+|-------------|-----------|
+| **Inputs**     | `button`, `icon_button`, `fab`, `chip`, `text_field`, `checkbox`, `radio`, `switch`, `select`, `slider`, `form_field`, `autocomplete`, `button_group`, `transfer_list`, `input_otp`, `file_upload`, `toggle`, `date_picker`, `rating`, `toggle_button_group` |
+| **Surfaces**   | `card`, `paper`, `divider`, `elevation` |
+| **Navigation** | `app_bar`, `drawer`, `tab_bar`, `bottom_navigation`, `menu`, `breadcrumbs`, `pagination`, `link` |
+| **Data**       | `list`, `table`, `avatar`, `badge`, `tooltip`, `typography`, `timeline`, `tree_view`, `stat`, `avatar_group`, `kbd`, `status`, `calendar`, `image_list` |
+| **Feedback**   | `alert`, `snackbar`, `dialog`, `linear_progress`, `circular_progress`, `skeleton`, `empty_state` |
+| **Overlays**   | `backdrop`, `modal`, `popover`, `hover_card`, `sheet`, `command` |
+| **Layout**     | `container`, `grid`, `stack`, `box`, `stepper`, `accordion`, `speed_dial`, `aspect_ratio`, `scroll_area`, `toolbar`, `carousel` |
+| **Utility**    | `icon`, `visually_hidden` |
 
-Navigation: `app_bar`, `drawer`, `tab_bar`, `bottom_navigation`, `menu`,
-`breadcrumbs`, `pagination`
+See [Storybook](https://kurtisrogers.github.io/djangd/) for live previews and
+prop tables.
 
-Data display: `list`, `table`, `avatar`, `badge`, `tooltip`, `typography`,
-`image_list`
+---
 
-Feedback: `alert`, `snackbar`, `dialog`, `linear_progress`,
-`circular_progress`, `skeleton`
+## Tree-shake: shipping only what you use
 
-Layout & misc: `container`, `grid`, `stack`, `icon`, `stepper`, `accordion`,
-`speed_dial`
+If a project only uses a handful of components, ship a smaller CSS bundle by
+declaring which components your project actually needs in Django settings:
+
+```python
+# settings.py
+DJANGD_FRAMEWORK = {
+    # Whitelist — only these components are kept registered.
+    "INCLUDE_COMPONENTS": ["button", "card", "alert", "text_field"],
+
+    # …or include entire groups (any of: inputs, surfaces, navigation,
+    # data, feedback, overlays, layout, utility):
+    "INCLUDE_GROUPS": ["inputs", "feedback"],
+
+    # …or use a blacklist (everything except these is kept):
+    "EXCLUDE_COMPONENTS": ["carousel", "calendar"],
+    "EXCLUDE_GROUPS": ["overlays"],
+}
+```
+
+Components that don't survive the filter are **unregistered** — calling
+`{% component "carousel" / %}` after excluding it raises `ComponentError`
+in DEBUG, surfacing the mistake immediately.
+
+### Generating a matching CSS subset
+
+`djangd_build_css` reads the same setting and emits a tree-shaken
+stylesheet containing only the SCSS partials your kept components need:
+
+```bash
+# Print which components / partials would be included (no files written):
+python manage.py djangd_build_css --dry-run
+
+# Generate the SCSS entry file only (compile with your own pipeline):
+python manage.py djangd_build_css --entry-output build/djangd.scss
+
+# Or generate AND compile in one step (Dart Sass, `npx sass`, or libsass):
+python manage.py djangd_build_css --compile --output static/djangd/dist/djangd.css
+```
+
+A bare `INCLUDE_COMPONENTS=["button", "card", "alert"]` setup produces a
+~6 KB compressed `djangd.css` instead of the ~70 KB full bundle.
+
+---
 
 ---
 

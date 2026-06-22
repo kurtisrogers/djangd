@@ -29,7 +29,7 @@ from __future__ import annotations
 
 from typing import ClassVar
 
-from ..registry import Component, register
+from ..registry import Component, register, registry
 
 # A compact metaclass-free way to declare lots of similar components.
 
@@ -40,6 +40,8 @@ def _make(
     defaults: dict | None = None,
     allowed: tuple[str, ...] | None = None,
     required: tuple[str, ...] = (),
+    group: str = "misc",
+    scss: tuple[str, ...] = (),
 ) -> type[Component]:
     cls = type(
         f"{name.replace('.', '_').title()}Component",
@@ -50,6 +52,8 @@ def _make(
             "defaults": dict(defaults or {}),
             "allowed_props": allowed,
             "required_props": required,
+            "group": group,
+            "scss_partials": tuple(scss),
         },
     )
     return register(cls, source="builtin")
@@ -727,3 +731,296 @@ _make(
     "djangd/components/visually_hidden.html",
     defaults={"tag": "span", "text": "", "id": None},
 )
+
+# ---------------------------------------------------------------------------
+# Round 3 — more modern app components: inputs, data, feedback, overlays.
+# ---------------------------------------------------------------------------
+_make(
+    "time_picker",
+    "djangd/components/time_picker.html",
+    defaults={
+        "label": "Time", "name": "time", "value": "",
+        "step": 60, "min_time": "", "max_time": "",
+        "helper": "", "required": False, "disabled": False, "id": None,
+    },
+    required=("name",),
+)
+_make(
+    "color_picker",
+    "djangd/components/color_picker.html",
+    defaults={
+        "label": "Colour", "name": "color", "value": "#6750a4",
+        "helper": "", "required": False, "disabled": False, "id": None,
+    },
+    required=("name",),
+)
+_make(
+    "number_field",
+    "djangd/components/number_field.html",
+    defaults={
+        "label": "Number", "name": "qty", "value": 1, "step": 1,
+        "min_value": None, "max_value": None, "placeholder": "",
+        "helper": "", "required": False, "disabled": False, "id": None,
+    },
+    required=("name",),
+)
+_make(
+    "search",
+    "djangd/components/search.html",
+    defaults={
+        "label": "Search", "name": "q", "value": "",
+        "placeholder": "Search…",
+        "action": "", "shortcut": "", "disabled": False, "id": None,
+    },
+)
+_make(
+    "password_field",
+    "djangd/components/password_field.html",
+    defaults={
+        "label": "Password", "name": "password", "value": "",
+        "placeholder": "", "helper": "",
+        "autocomplete": "current-password",
+        "minlength": None, "required": False, "disabled": False, "error": False, "id": None,
+    },
+    required=("name",),
+)
+_make(
+    "tag_input",
+    "djangd/components/tag_input.html",
+    defaults={
+        "label": "Tags", "name": "tags", "tags": (),
+        "placeholder": "Add a tag and press Enter",
+        "helper": "", "required": False, "disabled": False, "id": None,
+    },
+    required=("name",),
+)
+_make(
+    "code",
+    "djangd/components/code.html",
+    defaults={
+        "code": "", "language": "text", "title": "",
+        "line_numbers": False, "id": None,
+    },
+)
+_make(
+    "description_list",
+    "djangd/components/description_list.html",
+    defaults={
+        "items": (),                  # iterable of {term, description}
+        "orientation": "horizontal",  # horizontal | vertical
+        "id": None,
+    },
+    required=("items",),
+)
+_make(
+    "profile_card",
+    "djangd/components/profile_card.html",
+    defaults={
+        "name": "", "role": "", "bio": "",
+        "avatar": "", "initials": "", "avatar_shape": "circle",
+        "status_text": "", "status_tone": "online",
+        "outlined": False,
+        "actions": (),
+        "id": None,
+    },
+    required=("name",),
+)
+_make(
+    "toast",
+    "djangd/components/toast.html",
+    defaults={
+        "open": False, "tone": "info",   # info | success | warning | error
+        "title": "", "message": "",
+        "icon": None, "action_label": "", "dismissible": True,
+        "id": None,
+    },
+)
+_make(
+    "banner",
+    "djangd/components/banner.html",
+    defaults={
+        "tone": "info",   # info | success | warning | error
+        "title": "", "message": "",
+        "icon": None, "label": "",
+        "actions": (), "dismissible": True,
+        "id": None,
+    },
+)
+_make(
+    "dropdown_menu",
+    "djangd/components/dropdown_menu.html",
+    defaults={
+        "open": False,
+        "placement": "bottom",  # bottom | bottom-end | top
+        "trigger_label": "Menu",
+        "trigger_icon": None,
+        "trigger_classes": "",
+        # items: iterable of {label, href, icon, shortcut, danger} or
+        # {divider: True}.
+        "items": (),
+        "id": None,
+    },
+    required=("items",),
+)
+
+
+# ---------------------------------------------------------------------------
+# Component metadata: logical group + the SCSS partial(s) each component
+# needs. Consumed by the tree-shake settings filter and by the
+# ``djangd_build_css`` management command.
+#
+# Groups: inputs | surfaces | navigation | data | feedback | overlays |
+#         layout | utility
+# Partials are filenames under ``static/djangd/scss/components/`` without
+# the leading underscore or extension (e.g. "button" -> "_button.scss").
+# ---------------------------------------------------------------------------
+_COMPONENT_META: dict[str, tuple[str, tuple[str, ...]]] = {
+    # Inputs
+    "button":              ("inputs", ("button",)),
+    "icon_button":         ("inputs", ("icon-button",)),
+    "fab":                 ("inputs", ("fab",)),
+    "chip":                ("inputs", ("chip",)),
+    "text_field":          ("inputs", ("text-field",)),
+    "checkbox":            ("inputs", ("selection",)),
+    "radio":               ("inputs", ("selection",)),
+    "switch":              ("inputs", ("selection",)),
+    "select":              ("inputs", ("selection",)),
+    "slider":              ("inputs", ("selection",)),
+    "form_field":          ("inputs", ("selection",)),
+    "autocomplete":        ("inputs", ("inputs",)),
+    "button_group":        ("inputs", ("inputs", "button")),
+    "transfer_list":       ("inputs", ("inputs",)),
+    "input_otp":           ("inputs", ("inputs-extras",)),
+    "file_upload":         ("inputs", ("inputs-extras",)),
+    "toggle":              ("inputs", ("inputs-extras",)),
+    "date_picker":         ("inputs", ("inputs-extras",)),
+    "rating":              ("inputs", ("layout",)),
+    "toggle_button_group": ("inputs", ("layout",)),
+    # Surfaces
+    "card":                ("surfaces", ("card",)),
+    "paper":               ("surfaces", ("layout",)),
+    "divider":             ("surfaces", ("layout",)),
+    "elevation":           ("surfaces", ("layout",)),
+    # Navigation
+    "app_bar":             ("navigation", ("navigation",)),
+    "drawer":              ("navigation", ("navigation",)),
+    "tab_bar":             ("navigation", ("navigation",)),
+    "bottom_navigation":   ("navigation", ("navigation",)),
+    "menu":                ("navigation", ("navigation",)),
+    "breadcrumbs":         ("navigation", ("navigation",)),
+    "pagination":          ("navigation", ("navigation",)),
+    "link":                ("navigation", ("link",)),
+    # Data display
+    "list":                ("data", ("data",)),
+    "table":               ("data", ("data",)),
+    "avatar":              ("data", ("data",)),
+    "badge":               ("data", ("data",)),
+    "tooltip":             ("data", ("data",)),
+    "typography":          ("data", ("data",)),
+    "timeline":            ("data", ("data-extras",)),
+    "tree_view":           ("data", ("data-extras",)),
+    "stat":                ("data", ("data-extras",)),
+    "avatar_group":        ("data", ("data", "data-extras")),
+    "kbd":                 ("data", ("data-extras",)),
+    "status":              ("data", ("data-extras",)),
+    "calendar":            ("data", ("data-extras",)),
+    "image_list":          ("data", ("layout",)),
+    # Feedback
+    "alert":               ("feedback", ("feedback",)),
+    "snackbar":            ("feedback", ("feedback",)),
+    "dialog":              ("feedback", ("feedback",)),
+    "linear_progress":     ("feedback", ("feedback",)),
+    "circular_progress":   ("feedback", ("feedback",)),
+    "skeleton":            ("feedback", ("feedback",)),
+    "empty_state":         ("feedback", ("overlays-extras",)),
+    # Overlays
+    "backdrop":            ("overlays", ("overlays",)),
+    "modal":               ("overlays", ("overlays",)),
+    "popover":             ("overlays", ("overlays",)),
+    "hover_card":          ("overlays", ("overlays-extras",)),
+    "sheet":               ("overlays", ("overlays-extras",)),
+    "command":             ("overlays", ("overlays-extras", "data-extras")),  # uses kbd
+    # Layout
+    "container":           ("layout", ("layout",)),
+    "grid":                ("layout", ("layout",)),
+    "stack":               ("layout", ("layout",)),
+    "box":                 ("layout", ("box",)),
+    "stepper":             ("layout", ("layout",)),
+    "accordion":           ("layout", ("layout",)),
+    "speed_dial":          ("layout", ("fab",)),
+    "aspect_ratio":        ("layout", ("layout-extras",)),
+    "scroll_area":         ("layout", ("layout-extras",)),
+    "toolbar":             ("layout", ("layout-extras",)),
+    "carousel":            ("layout", ("layout-extras",)),
+    # Utility
+    "icon":                ("utility", ()),
+    "visually_hidden":     ("utility", ()),
+    # Round 3 additions
+    "time_picker":         ("inputs", ("modern-2",)),
+    "color_picker":        ("inputs", ("modern-2",)),
+    "number_field":        ("inputs", ("modern-2",)),
+    "search":              ("inputs", ("modern-2", "data-extras")),  # uses kbd
+    "password_field":      ("inputs", ("modern-2",)),
+    "tag_input":           ("inputs", ("modern-2", "chip")),
+    "code":                ("data",   ("modern-2",)),
+    "description_list":    ("data",   ("modern-2",)),
+    "profile_card":        ("data",   ("modern-2", "data", "data-extras")),
+    "toast":               ("feedback", ("modern-2",)),
+    "banner":              ("feedback", ("modern-2",)),
+    "dropdown_menu":       ("overlays", ("modern-2",)),
+}
+
+# Apply the metadata to every registered class.
+for _name, (_group, _scss) in _COMPONENT_META.items():
+    if _name in registry:
+        _cls = registry.get(_name)
+        _cls.group = _group
+        _cls.scss_partials = _scss
+
+
+# Allow users to opt out of components via Django settings:
+#
+#     DJANGD_FRAMEWORK = {
+#         # Whitelist mode — only these components are kept registered.
+#         "INCLUDE_COMPONENTS": ["button", "card", "alert"],
+#         # …or groups (any component whose group is in this list is kept).
+#         "INCLUDE_GROUPS": ["inputs", "feedback"],
+#         # Blacklist mode — everything except these is kept.
+#         "EXCLUDE_COMPONENTS": ["carousel", "calendar"],
+#         "EXCLUDE_GROUPS": ["overlays"],
+#     }
+#
+# INCLUDE_* and EXCLUDE_* combine: a component is kept iff it passes both the
+# include filter (if any) and the exclude filter.
+def _apply_settings_filter() -> None:
+    try:
+        from django.conf import settings
+    except Exception:
+        return
+    config = getattr(settings, "DJANGD_FRAMEWORK", None)
+    if not isinstance(config, dict):
+        return
+
+    include_components = set(config.get("INCLUDE_COMPONENTS") or [])
+    include_groups     = set(config.get("INCLUDE_GROUPS") or [])
+    exclude_components = set(config.get("EXCLUDE_COMPONENTS") or [])
+    exclude_groups     = set(config.get("EXCLUDE_GROUPS") or [])
+
+    if not (include_components or include_groups or exclude_components or exclude_groups):
+        return
+
+    has_include = bool(include_components or include_groups)
+    for name in list(registry.all()):
+        cls = registry.get(name)
+        group = getattr(cls, "group", "misc")
+        keep = True
+        if has_include:
+            keep = name in include_components or group in include_groups
+        if keep and (name in exclude_components or group in exclude_groups):
+            keep = False
+        if not keep:
+            registry.unregister(name)
+
+
+_apply_settings_filter()
+

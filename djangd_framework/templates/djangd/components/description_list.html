@@ -1,0 +1,11 @@
+{% load djangd %}<dl
+  class="djangd-description-list djangd-description-list--{{ orientation }} {{ extra_classes }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  {% for item in items %}
+    <div class="djangd-description-list__row">
+      <dt class="djangd-description-list__term">{{ item.term }}</dt>
+      <dd class="djangd-description-list__description">{{ item.description }}</dd>
+    </div>
+  {% endfor %}
+</dl>

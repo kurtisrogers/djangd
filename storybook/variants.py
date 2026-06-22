@@ -271,6 +271,65 @@ VARIANTS: dict[str, tuple] = {
         '<span class="djangd-visually-hidden">Delete item</span>'
         "</button>"
     ),
+
+    # -----------------------------------------------------------------------
+    # Round 3 additions
+    # -----------------------------------------------------------------------
+    "time_picker__default":  ("time_picker",  {"label": "Pickup time", "name": "pickup", "value": "09:30"}),
+    "color_picker__default": ("color_picker", {"label": "Theme accent", "name": "accent", "value": "#6750a4"}),
+    "number_field__default": ("number_field", {"label": "Quantity",     "name": "qty", "value": 2, "min_value": 0, "max_value": 99}),
+    "search__default":       ("search",       {"label": "Search", "name": "q", "placeholder": "Search components…", "shortcut": "⌘K"}),
+    "password_field__default": ("password_field", {"label": "Password", "name": "pw", "helper": "At least 8 characters", "minlength": 8}),
+    "tag_input__default":    ("tag_input",    {"label": "Topics", "name": "topics", "tags": ("django", "components", "material"), "helper": "Press Enter to add a tag"}),
+    "code__python":          ("code", {
+        "language": "python",
+        "code": (
+            "from djangd_framework import Component, register\n\n"
+            "@register\n"
+            "class Hero(Component):\n"
+            "    name = \"my.hero\"\n"
+            "    template = \"my_app/hero.html\"\n"
+            "    defaults = {\"title\": \"\", \"subtitle\": \"\"}\n"
+        ),
+        "line_numbers": True,
+    }),
+    "description_list__horizontal": ("description_list", {
+        "orientation": "horizontal",
+        "items": (
+            {"term": "Plan",         "description": "Pro"},
+            {"term": "Seats",        "description": "5 of 10"},
+            {"term": "Next billing", "description": "1 Aug 2026"},
+            {"term": "Status",       "description": "Active"},
+        ),
+    }),
+    "profile_card__default": ("profile_card", {
+        "name": "Kurtis Rogers",
+        "role": "Maintainer · djangd-framework",
+        "bio": "Working on a server-rendered component library for Django, with Material foundations.",
+        "initials": "KR",
+        "status_text": "Online",
+        "status_tone": "online",
+    }),
+    "toast__success": ("__html__", None),  # filled below — wraps the real toast
+    "toast__error":   ("__html__", None),
+    "banner__warning": ("banner", {
+        "tone": "warning",
+        "title": "Maintenance window",
+        "message": "We'll be performing scheduled maintenance on Sunday 03:00–05:00 UTC.",
+        "icon": "warning",
+    }),
+    "dropdown_menu__open": ("dropdown_menu", {
+        "open": True,
+        "trigger_label": "Account",
+        "trigger_icon": "person",
+        "items": (
+            {"label": "Profile",  "icon": "person",   "shortcut": "G P"},
+            {"label": "Billing",  "icon": "credit_card"},
+            {"label": "Settings", "icon": "settings", "shortcut": "G S"},
+            {"divider": True},
+            {"label": "Sign out", "icon": "logout", "danger": True},
+        ),
+    }),
 }
 
 
@@ -474,6 +533,35 @@ def _populate_compositions() -> None:
                 "body-large", "body-medium", "label-large",
             )
         ))
+
+    # ---- Toast demos: wrap the real <toast> in a non-fixed demo frame so
+    # storybook shows it inline instead of pinned to the viewport corner.
+    def _toast_demo(tone: str, title: str, message: str, icon: str) -> str:
+        # Force `open` and the demo positions inline rather than the
+        # default `position: fixed; bottom/right` that toasts use in
+        # production. Easier than fighting the CSS in Storybook.
+        toast_html = render("toast", {
+            "open": True, "tone": tone, "title": title, "message": message,
+            "icon": icon, "dismissible": True, "action_label": "Undo",
+        })
+        return (
+            '<div style="position:relative;height:140px;padding:16px;border:1px dashed var(--djangd-color-outline);overflow:hidden;">'
+            '<p style="font-family:var(--djangd-font-family);margin:0 0 8px;">Toast appears anchored to the bottom-right in production.</p>'
+            + toast_html.replace(
+                'class="djangd-toast ',
+                'style="position:absolute;right:16px;bottom:16px;" class="djangd-toast ',
+            )
+            + "</div>"
+        )
+
+    VARIANTS["toast__success"] = ("__html__", _toast_demo(
+        "success", "Changes saved",
+        "Your profile has been updated successfully.", "check_circle",
+    ))
+    VARIANTS["toast__error"] = ("__html__", _toast_demo(
+        "error", "Couldn't save",
+        "There was a problem updating your profile. Try again.", "error",
+    ))
 
 
 _populate_compositions()

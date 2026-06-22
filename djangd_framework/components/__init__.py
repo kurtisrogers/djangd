@@ -732,6 +732,137 @@ _make(
     defaults={"tag": "span", "text": "", "id": None},
 )
 
+# ---------------------------------------------------------------------------
+# Round 3 — more modern app components: inputs, data, feedback, overlays.
+# ---------------------------------------------------------------------------
+_make(
+    "time_picker",
+    "djangd/components/time_picker.html",
+    defaults={
+        "label": "Time", "name": "time", "value": "",
+        "step": 60, "min_time": "", "max_time": "",
+        "helper": "", "required": False, "disabled": False, "id": None,
+    },
+    required=("name",),
+)
+_make(
+    "color_picker",
+    "djangd/components/color_picker.html",
+    defaults={
+        "label": "Colour", "name": "color", "value": "#6750a4",
+        "helper": "", "required": False, "disabled": False, "id": None,
+    },
+    required=("name",),
+)
+_make(
+    "number_field",
+    "djangd/components/number_field.html",
+    defaults={
+        "label": "Number", "name": "qty", "value": 1, "step": 1,
+        "min_value": None, "max_value": None, "placeholder": "",
+        "helper": "", "required": False, "disabled": False, "id": None,
+    },
+    required=("name",),
+)
+_make(
+    "search",
+    "djangd/components/search.html",
+    defaults={
+        "label": "Search", "name": "q", "value": "",
+        "placeholder": "Search…",
+        "action": "", "shortcut": "", "disabled": False, "id": None,
+    },
+)
+_make(
+    "password_field",
+    "djangd/components/password_field.html",
+    defaults={
+        "label": "Password", "name": "password", "value": "",
+        "placeholder": "", "helper": "",
+        "autocomplete": "current-password",
+        "minlength": None, "required": False, "disabled": False, "error": False, "id": None,
+    },
+    required=("name",),
+)
+_make(
+    "tag_input",
+    "djangd/components/tag_input.html",
+    defaults={
+        "label": "Tags", "name": "tags", "tags": (),
+        "placeholder": "Add a tag and press Enter",
+        "helper": "", "required": False, "disabled": False, "id": None,
+    },
+    required=("name",),
+)
+_make(
+    "code",
+    "djangd/components/code.html",
+    defaults={
+        "code": "", "language": "text", "title": "",
+        "line_numbers": False, "id": None,
+    },
+)
+_make(
+    "description_list",
+    "djangd/components/description_list.html",
+    defaults={
+        "items": (),                  # iterable of {term, description}
+        "orientation": "horizontal",  # horizontal | vertical
+        "id": None,
+    },
+    required=("items",),
+)
+_make(
+    "profile_card",
+    "djangd/components/profile_card.html",
+    defaults={
+        "name": "", "role": "", "bio": "",
+        "avatar": "", "initials": "", "avatar_shape": "circle",
+        "status_text": "", "status_tone": "online",
+        "outlined": False,
+        "actions": (),
+        "id": None,
+    },
+    required=("name",),
+)
+_make(
+    "toast",
+    "djangd/components/toast.html",
+    defaults={
+        "open": False, "tone": "info",   # info | success | warning | error
+        "title": "", "message": "",
+        "icon": None, "action_label": "", "dismissible": True,
+        "id": None,
+    },
+)
+_make(
+    "banner",
+    "djangd/components/banner.html",
+    defaults={
+        "tone": "info",   # info | success | warning | error
+        "title": "", "message": "",
+        "icon": None, "label": "",
+        "actions": (), "dismissible": True,
+        "id": None,
+    },
+)
+_make(
+    "dropdown_menu",
+    "djangd/components/dropdown_menu.html",
+    defaults={
+        "open": False,
+        "placement": "bottom",  # bottom | bottom-end | top
+        "trigger_label": "Menu",
+        "trigger_icon": None,
+        "trigger_classes": "",
+        # items: iterable of {label, href, icon, shortcut, danger} or
+        # {divider: True}.
+        "items": (),
+        "id": None,
+    },
+    required=("items",),
+)
+
 
 # ---------------------------------------------------------------------------
 # Component metadata: logical group + the SCSS partial(s) each component
@@ -824,6 +955,19 @@ _COMPONENT_META: dict[str, tuple[str, tuple[str, ...]]] = {
     # Utility
     "icon":                ("utility", ()),
     "visually_hidden":     ("utility", ()),
+    # Round 3 additions
+    "time_picker":         ("inputs", ("modern-2",)),
+    "color_picker":        ("inputs", ("modern-2",)),
+    "number_field":        ("inputs", ("modern-2",)),
+    "search":              ("inputs", ("modern-2", "data-extras")),  # uses kbd
+    "password_field":      ("inputs", ("modern-2",)),
+    "tag_input":           ("inputs", ("modern-2", "chip")),
+    "code":                ("data",   ("modern-2",)),
+    "description_list":    ("data",   ("modern-2",)),
+    "profile_card":        ("data",   ("modern-2", "data", "data-extras")),
+    "toast":               ("feedback", ("modern-2",)),
+    "banner":              ("feedback", ("modern-2",)),
+    "dropdown_menu":       ("overlays", ("modern-2",)),
 }
 
 # Apply the metadata to every registered class.

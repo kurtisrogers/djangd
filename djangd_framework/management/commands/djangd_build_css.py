@@ -182,6 +182,7 @@ class Command(BaseCommand):
 
         entry_content = _build_entry(partials)
         entry_path: Path
+        entry_is_temp = False
         if options["entry_output"] is not None:
             entry_path = options["entry_output"]
             entry_path.parent.mkdir(parents=True, exist_ok=True)
@@ -196,22 +197,29 @@ class Command(BaseCommand):
             finally:
                 fd.close()
             entry_path = Path(fd.name)
+            entry_is_temp = True
 
-        self.stdout.write(
-            self.style.SUCCESS(
-                f"Wrote entry SCSS ({len(partials)} partials, "
-                f"{len(component_names)} components): {entry_path}"
+        if not (entry_is_temp and options["compile"]):
+            self.stdout.write(
+                self.style.SUCCESS(
+                    f"Wrote entry SCSS ({len(partials)} partials, "
+                    f"{len(component_names)} components): {entry_path}"
+                )
             )
-        )
 
         if options["compile"]:
             output: Path = options["output"]
             output.parent.mkdir(parents=True, exist_ok=True)
-            label = _compile_to_css(entry_path, output)
+            try:
+                label = _compile_to_css(entry_path, output)
+            finally:
+                if entry_is_temp:
+                    entry_path.unlink(missing_ok=True)
             size = output.stat().st_size
             self.stdout.write(
                 self.style.SUCCESS(
-                    f"Compiled {output} ({size:,} bytes) with {label}."
+                    f"Compiled {output} ({size:,} bytes, "
+                    f"{len(partials)} partials, {len(component_names)} components) with {label}."
                 )
             )
         elif options["entry_output"] is None:

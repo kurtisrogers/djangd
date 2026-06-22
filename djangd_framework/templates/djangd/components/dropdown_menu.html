@@ -1,0 +1,34 @@
+{% load djangd %}{% with dd_id=id|default:"djangd-dropdown" %}
+<div
+  class="djangd-dropdown-menu {% if open %}djangd-dropdown-menu--open{% endif %} djangd-dropdown-menu--{{ placement }} {{ extra_classes }}"
+  id="{{ dd_id }}"
+  {{ attrs|djangd_attrs }}>
+  <button type="button"
+          class="djangd-dropdown-menu__trigger {{ trigger_classes }}"
+          aria-haspopup="menu"
+          aria-expanded="{% if open %}true{% else %}false{% endif %}"
+          aria-controls="{{ dd_id }}-menu">
+    {% if trigger_icon %}<i class="material-icons" aria-hidden="true">{{ trigger_icon }}</i>{% endif %}
+    {% if trigger_label %}<span>{{ trigger_label }}</span>{% endif %}
+    <i class="material-icons djangd-dropdown-menu__caret" aria-hidden="true">expand_more</i>
+  </button>
+  <ul class="djangd-dropdown-menu__panel" id="{{ dd_id }}-menu" role="menu" aria-orientation="vertical">
+    {% for item in items %}
+      {% if item.divider %}
+        <li class="djangd-dropdown-menu__divider" role="separator"></li>
+      {% else %}
+        <li class="djangd-dropdown-menu__item" role="none">
+          <a class="djangd-dropdown-menu__link {% if item.danger %}djangd-dropdown-menu__link--danger{% endif %}"
+             role="menuitem"
+             tabindex="-1"
+             href="{{ item.href|default:'#' }}">
+            {% if item.icon %}<i class="material-icons djangd-dropdown-menu__icon" aria-hidden="true">{{ item.icon }}</i>{% endif %}
+            <span class="djangd-dropdown-menu__label">{{ item.label }}</span>
+            {% if item.shortcut %}<kbd class="djangd-kbd djangd-kbd--sm">{{ item.shortcut }}</kbd>{% endif %}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>
+{% endwith %}

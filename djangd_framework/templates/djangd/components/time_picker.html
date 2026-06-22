@@ -1,0 +1,26 @@
+{% load djangd %}{% with input_id=id|default:"djangd-tp"|add:"-"|add:name %}
+<div
+  class="djangd-time-picker {% if disabled %}djangd-time-picker--disabled{% endif %} {{ extra_classes }}"
+  {{ attrs|djangd_attrs }}>
+  <label class="djangd-time-picker__label" for="{{ input_id }}">
+    {{ label }}{% if required %} <span aria-hidden="true">*</span>{% endif %}
+  </label>
+  <div class="djangd-time-picker__field">
+    <input
+      class="djangd-time-picker__input mdc-text-field__input"
+      type="time"
+      id="{{ input_id }}"
+      name="{{ name }}"
+      value="{{ value }}"
+      step="{{ step }}"
+      {% if min_time %}min="{{ min_time }}"{% endif %}
+      {% if max_time %}max="{{ max_time }}"{% endif %}
+      {% if required %}required aria-required="true"{% endif %}
+      {% if disabled %}disabled{% endif %}
+      aria-describedby="{% if helper %}{{ input_id }}-helper{% endif %}"
+    />
+    <i class="material-icons djangd-time-picker__icon" aria-hidden="true">schedule</i>
+  </div>
+  {% if helper %}<div class="djangd-time-picker__helper" id="{{ input_id }}-helper">{{ helper }}</div>{% endif %}
+</div>
+{% endwith %}

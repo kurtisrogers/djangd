@@ -1,0 +1,21 @@
+{% load djangd %}<aside
+  class="djangd-banner djangd-banner--{{ tone }} {{ extra_classes }}"
+  role="region"
+  aria-label="{{ label|default:title|default:'Announcement' }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  {% if icon %}<i class="material-icons djangd-banner__icon" aria-hidden="true">{{ icon }}</i>{% endif %}
+  <div class="djangd-banner__body">
+    {% if title %}<div class="djangd-banner__title">{{ title }}</div>{% endif %}
+    {% if message %}<div class="djangd-banner__message">{{ message }}</div>{% endif %}
+    {{ children }}
+  </div>
+  {% if actions %}
+    <div class="djangd-banner__actions">{% for action in actions %}{{ action|safe }}{% endfor %}</div>
+  {% endif %}
+  {% if dismissible %}
+    <button type="button" class="djangd-icon-button mdc-icon-button djangd-banner__close" aria-label="Dismiss" data-dismiss="banner">
+      <i class="material-icons" aria-hidden="true">close</i>
+    </button>
+  {% endif %}
+</aside>

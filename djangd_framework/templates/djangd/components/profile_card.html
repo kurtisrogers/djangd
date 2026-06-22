@@ -1,0 +1,33 @@
+{% load djangd %}<article
+  class="djangd-profile-card {% if outlined %}djangd-profile-card--outlined{% endif %} {{ extra_classes }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  <header class="djangd-profile-card__header">
+    <span class="djangd-avatar djangd-avatar--large djangd-avatar--{{ avatar_shape }}">
+      {% if avatar %}
+        <img class="djangd-avatar__image" src="{{ avatar }}" alt="{{ name }}" />
+      {% elif initials %}
+        <span class="djangd-avatar__initials" aria-label="{{ name }}">{{ initials }}</span>
+      {% else %}
+        <i class="material-icons djangd-avatar__icon" aria-hidden="true">person</i>
+      {% endif %}
+    </span>
+    <div class="djangd-profile-card__heading">
+      <div class="djangd-profile-card__name">{{ name }}</div>
+      {% if role %}<div class="djangd-profile-card__role">{{ role }}</div>{% endif %}
+      {% if status_text %}
+        <span class="djangd-status djangd-status--{{ status_tone|default:'online' }}">
+          <span class="djangd-status__dot" aria-hidden="true"></span>
+          <span class="djangd-status__text">{{ status_text }}</span>
+        </span>
+      {% endif %}
+    </div>
+  </header>
+  {% if bio %}<p class="djangd-profile-card__bio">{{ bio }}</p>{% endif %}
+  {% if actions %}
+    <footer class="djangd-profile-card__actions">
+      {% for action in actions %}{{ action|safe }}{% endfor %}
+    </footer>
+  {% endif %}
+  {{ children }}
+</article>

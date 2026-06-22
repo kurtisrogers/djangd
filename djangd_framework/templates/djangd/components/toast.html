@@ -1,0 +1,26 @@
+{% load djangd %}{% with toast_id=id|default:"djangd-toast" %}
+<div
+  class="djangd-toast djangd-toast--{{ tone }} {% if open %}djangd-toast--open{% endif %} {{ extra_classes }}"
+  id="{{ toast_id }}"
+  role="status"
+  aria-live="polite"
+  aria-atomic="true"
+  {{ attrs|djangd_attrs }}>
+  {% if icon %}
+    <i class="material-icons djangd-toast__icon" aria-hidden="true">{{ icon }}</i>
+  {% endif %}
+  <div class="djangd-toast__body">
+    {% if title %}<div class="djangd-toast__title">{{ title }}</div>{% endif %}
+    {% if message %}<div class="djangd-toast__message">{{ message }}</div>{% endif %}
+    {{ children }}
+  </div>
+  {% if action_label %}
+    <button type="button" class="djangd-toast__action" data-action="primary">{{ action_label }}</button>
+  {% endif %}
+  {% if dismissible %}
+    <button type="button" class="djangd-icon-button mdc-icon-button djangd-toast__close" aria-label="Dismiss" data-dismiss="toast">
+      <i class="material-icons" aria-hidden="true">close</i>
+    </button>
+  {% endif %}
+</div>
+{% endwith %}

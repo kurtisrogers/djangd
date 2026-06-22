@@ -1,0 +1,35 @@
+{% load djangd %}{% with input_id=id|default:"djangd-tags"|add:"-"|add:name %}
+<div
+  class="djangd-tag-input {% if disabled %}djangd-tag-input--disabled{% endif %} {{ extra_classes }}"
+  {{ attrs|djangd_attrs }}>
+  <label class="djangd-tag-input__label" for="{{ input_id }}">
+    {{ label }}{% if required %} <span aria-hidden="true">*</span>{% endif %}
+  </label>
+  <div class="djangd-tag-input__field" role="group" aria-labelledby="{{ input_id }}-label">
+    <ul class="djangd-tag-input__chips" role="list">
+      {% for tag in tags %}
+        <li class="djangd-chip djangd-chip--removable djangd-tag-input__chip" role="listitem">
+          <span class="djangd-chip__label">{{ tag }}</span>
+          <input type="hidden" name="{{ name }}" value="{{ tag }}" />
+          <button type="button" class="djangd-chip__remove" aria-label="Remove {{ tag }}" data-tag="{{ tag }}">
+            <i class="material-icons" aria-hidden="true">close</i>
+          </button>
+        </li>
+      {% endfor %}
+      <li class="djangd-tag-input__editor">
+        <input
+          class="djangd-tag-input__input"
+          id="{{ input_id }}"
+          type="text"
+          aria-label="{{ label }}"
+          aria-describedby="{% if helper %}{{ input_id }}-helper{% endif %}"
+          placeholder="{{ placeholder }}"
+          {% if disabled %}disabled{% endif %}
+          autocomplete="off"
+        />
+      </li>
+    </ul>
+  </div>
+  {% if helper %}<div class="djangd-tag-input__helper" id="{{ input_id }}-helper">{{ helper }}</div>{% endif %}
+</div>
+{% endwith %}

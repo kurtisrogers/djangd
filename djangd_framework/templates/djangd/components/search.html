@@ -1,0 +1,26 @@
+{% load djangd %}{% with input_id=id|default:"djangd-search"|add:"-"|add:name %}
+<form
+  class="djangd-search {% if disabled %}djangd-search--disabled{% endif %} {{ extra_classes }}"
+  role="search"
+  {% if action %}action="{{ action }}"{% endif %}
+  method="get"
+  {{ attrs|djangd_attrs }}>
+  <label class="djangd-visually-hidden" for="{{ input_id }}">{{ label }}</label>
+  <i class="material-icons djangd-search__icon" aria-hidden="true">search</i>
+  <input
+    class="djangd-search__input"
+    id="{{ input_id }}"
+    name="{{ name }}"
+    type="search"
+    role="searchbox"
+    autocomplete="off"
+    value="{{ value }}"
+    {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+    {% if disabled %}disabled{% endif %}
+  />
+  {% if shortcut %}<kbd class="djangd-kbd djangd-kbd--sm djangd-search__shortcut" aria-hidden="true">{{ shortcut }}</kbd>{% endif %}
+  <button type="reset" class="djangd-search__clear" aria-label="Clear search" {% if disabled %}disabled{% endif %}>
+    <i class="material-icons" aria-hidden="true">close</i>
+  </button>
+</form>
+{% endwith %}

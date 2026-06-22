@@ -22,3 +22,6 @@ export const StatusAway   = djangoStory("status__away");
 export const StatusBusy   = djangoStory("status__busy");
 export const StatusOffline = djangoStory("status__offline");
 export const Calendar    = djangoStory("calendar__default");
+export const Code        = djangoStory("code__python");
+export const DescriptionList = djangoStory("description_list__horizontal");
+export const ProfileCard = djangoStory("profile_card__default");

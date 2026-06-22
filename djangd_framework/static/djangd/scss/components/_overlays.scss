@@ -20,29 +20,27 @@
 }
 
 // ---- Modal ------------------------------------------------------------------
+// Built on the native HTML <dialog> element. Rendering with the `open`
+// attribute shows the dialog as a non-modal popover; calling
+// `dialog.showModal()` from JS promotes it to the top layer, traps focus,
+// enables the Esc key, and lights up the ::backdrop pseudo styled below.
 .djangd-modal {
-  position: fixed;
-  inset: 0;
-  display: none;
-  z-index: 1300;
+  background: var(--djangd-color-surface);
+  color: var(--djangd-color-on-surface);
+  border: 0;
+  border-radius: var(--djangd-radius-lg);
+  padding: var(--djangd-space-5);
+  max-width: min(560px, calc(100% - 32px));
+  width: 100%;
+  @include djangd-elevation(3);
 
-  &--open { display: block; }
-
-  &__backdrop {
-    position: absolute;
-    inset: 0;
+  &::backdrop {
     background: rgba(0, 0, 0, .5);
   }
 
-  &__container {
-    position: relative;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--djangd-space-4);
-    outline: none;
-  }
+  &:focus-visible { outline: none; }
+
+  &[open] { margin: auto; }
 }
 
 // ---- Popover ----------------------------------------------------------------

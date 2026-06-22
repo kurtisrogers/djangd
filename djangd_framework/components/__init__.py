@@ -355,3 +355,113 @@ _make(
     "djangd/components/stack.html",
     defaults={"direction": "vertical", "gap": "md", "align": None, "justify": None, "items": ()},
 )
+_make(
+    "box",
+    "djangd/components/box.html",
+    defaults={
+        "tag": "div",
+        "padding": None,   # 0..6 | None — maps to djangd-box--p-<n>
+        "margin": None,    # 0..6 | "auto" | None — maps to djangd-box--m-<n>
+        "display": None,   # block | inline | inline-block | flex | inline-flex | grid | hidden | None
+        "align": None,     # start | center | end | stretch | None
+        "justify": None,   # start | center | end | between | around | None
+        "rounded": None,   # xs | sm | md | lg | pill | None
+        "surface": None,   # default | variant | primary | None
+        "id": None,
+    },
+)
+
+# ---------------------------------------------------------------------------
+# Inputs (extended): autocomplete, button group, transfer list
+# ---------------------------------------------------------------------------
+_make(
+    "autocomplete",
+    "djangd/components/autocomplete.html",
+    defaults={
+        "label": "",
+        "name": "",
+        "value": "",
+        "options": (),   # iterable of strings, or dicts: {"value": ..., "label": ...}
+        "placeholder": "",
+        "helper": "",
+        "required": False,
+        "disabled": False,
+        "id": None,
+    },
+    required=("label", "name"),
+)
+_make(
+    "button_group",
+    "djangd/components/button_group.html",
+    defaults={
+        "buttons": (),       # iterable of pre-rendered button HTML strings
+        "label": "",         # accessible group label
+        "orientation": "horizontal",  # horizontal | vertical
+        "variant": "contained",       # contained | outlined
+        "full_width": False,
+        "id": None,
+    },
+)
+_make(
+    "transfer_list",
+    "djangd/components/transfer_list.html",
+    defaults={
+        "name": "transfer",
+        "label": "",
+        "source_title": "Available",
+        "target_title": "Selected",
+        "source_items": (),  # iterable of strings or {"value": ..., "label": ...}
+        "target_items": (),  # iterable of strings or {"value": ..., "label": ...}
+        "id": None,
+    },
+)
+
+# ---------------------------------------------------------------------------
+# Overlays: backdrop, modal, popover
+# ---------------------------------------------------------------------------
+_make(
+    "backdrop",
+    "djangd/components/backdrop.html",
+    defaults={"open": False, "invisible": False, "id": None},
+)
+_make(
+    "modal",
+    "djangd/components/modal.html",
+    defaults={
+        "open": False,
+        "label": "",
+        "labelledby": "",
+        "describedby": "",
+        "id": None,
+    },
+)
+_make(
+    "popover",
+    "djangd/components/popover.html",
+    defaults={
+        "open": False,
+        "placement": "bottom",  # top | bottom | left | right
+        "anchor": None,         # CSS selector or element id the popover is anchored to
+        "arrow": True,
+        "label": "",
+        "id": None,
+    },
+)
+
+# ---------------------------------------------------------------------------
+# Link
+# ---------------------------------------------------------------------------
+_make(
+    "link",
+    "djangd/components/link.html",
+    defaults={
+        "text": "",
+        "href": "#",
+        "target": None,        # _self | _blank | _parent | _top | None
+        "variant": "body",     # body | button | inherit
+        "underline": "always", # always | hover | none
+        "color": "primary",    # primary | secondary | error | success | warning | inherit
+        "id": None,
+    },
+    required=("href",),
+)

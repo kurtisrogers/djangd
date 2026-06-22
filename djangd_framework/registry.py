@@ -101,6 +101,14 @@ class Registry:
     def unregister(self, name: str) -> None:
         self._items.pop(name, None)
 
+    def clear(self, *, source: str | None = None) -> None:
+        """Remove all registrations (or only those from a given source)."""
+        if source is None:
+            self._items.clear()
+        else:
+            for n in [n for n, r in self._items.items() if r.source == source]:
+                self._items.pop(n, None)
+
     def get(self, name: str) -> type["Component"]:
         try:
             return self._items[name].component
@@ -112,6 +120,16 @@ class Registry:
 
     def all(self) -> Mapping[str, type["Component"]]:
         return {n: r.component for n, r in sorted(self._items.items())}
+
+    def by_group(self, group: str) -> list[str]:
+        """Names of components in the given group."""
+        return sorted(
+            n for n, r in self._items.items() if getattr(r.component, "group", "misc") == group
+        )
+
+    def groups(self) -> list[str]:
+        """All distinct component groups currently in the registry."""
+        return sorted({getattr(r.component, "group", "misc") for r in self._items.values()})
 
     def __contains__(self, name: str) -> bool:
         return name in self._items
@@ -143,6 +161,14 @@ class Component:
     defaults: ClassVar[dict[str, Any]] = {}
     allowed_props: ClassVar[tuple[str, ...] | None] = None
     required_props: ClassVar[tuple[str, ...]] = ()
+    # Logical group the component belongs to ("inputs", "feedback", ...).
+    # Used by the tree-shake config and by the CSS subset builder so groups
+    # can be opted in/out as a unit. Defaults to "misc".
+    group: ClassVar[str] = "misc"
+    # The SCSS partial(s) under ``static/djangd/scss/components/`` this
+    # component depends on (without the leading underscore or .scss). Used
+    # by ``djangd_build_css`` to emit a minimal entry stylesheet.
+    scss_partials: ClassVar[tuple[str, ...]] = ()
 
     # ---- runtime state ------------------------------------------------------
     props: dict[str, Any] = field(default_factory=dict)

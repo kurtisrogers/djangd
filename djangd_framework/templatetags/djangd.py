@@ -23,6 +23,7 @@ from __future__ import annotations
 
 from django import template
 from django.template.base import Node, NodeList, Parser, Token, TemplateSyntaxError
+from django.utils.html import escape
 from django.utils.safestring import mark_safe
 
 from ..registry import registry
@@ -116,8 +117,6 @@ def djangd_attrs(value: dict | None) -> str:
     """
     if not value:
         return ""
-    from django.utils.html import escape
-
     parts: list[str] = []
     for k, v in value.items():
         if v is True:
@@ -127,3 +126,16 @@ def djangd_attrs(value: dict | None) -> str:
         else:
             parts.append(f'{escape(k)}="{escape(v)}"')
     return mark_safe(" ".join(parts))  # noqa: S308
+
+
+@register.filter(name="djangd_sub")
+def djangd_sub(value, arg) -> int:
+    """Subtract ``arg`` from ``value`` (both coerced to int).
+
+    Used in templates where a numeric subtraction is needed and Django's
+    built-in ``add`` filter can't compose because the operand is a variable.
+    """
+    try:
+        return int(value) - int(arg)
+    except (TypeError, ValueError):
+        return value

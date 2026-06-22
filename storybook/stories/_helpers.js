@@ -15,7 +15,7 @@
 const RENDERED_BASE = "rendered";
 const cache = new Map();
 
-async function loadRendered(variantId) {
+function loadRendered(variantId) {
   if (!cache.has(variantId)) {
     cache.set(
       variantId,
@@ -33,6 +33,33 @@ async function loadRendered(variantId) {
 }
 
 /**
+ * Storybook's HTML framework expects ``render()`` to return a string or a
+ * DOM Node synchronously — Promises slip past the renderer's type check
+ * and produce 'Expecting an HTML snippet or DOM node' errors. So we return
+ * a host ``<div>`` immediately and fill its ``innerHTML`` once the fetch
+ * resolves.
+ */
+function makeHost(variantId) {
+  const host = document.createElement("div");
+  host.className = "djangd-story-host";
+  host.dataset.djangdVariant = variantId;
+
+  loadRendered(variantId)
+    .then((html) => {
+      host.innerHTML = html;
+      const djangd = typeof window !== "undefined" ? window.djangd : null;
+      if (djangd && typeof djangd.enhance === "function") {
+        djangd.enhance(host);
+      }
+    })
+    .catch((err) => {
+      host.innerHTML = `<pre style="color:var(--djangd-color-error,#b3261e);background:var(--djangd-color-surface-variant,#fbeff2);padding:12px 16px;border-radius:8px;font-family:var(--djangd-font-family-mono,ui-monospace,monospace);white-space:pre-wrap;">${err.message}</pre>`;
+    });
+
+  return host;
+}
+
+/**
  * Story that always renders a single Django-rendered variant.
  *
  * @example
@@ -41,7 +68,7 @@ async function loadRendered(variantId) {
 export function djangoStory(variantId, extras = {}) {
   return {
     ...extras,
-    render: () => loadRendered(variantId),
+    render: () => makeHost(variantId),
   };
 }
 
@@ -62,12 +89,12 @@ export function djangoStoryWithControls({ args = {}, argTypes = {}, resolve }) {
   return {
     args,
     argTypes,
-    render: (resolvedArgs) => loadRendered(resolve(resolvedArgs)),
+    render: (resolvedArgs) => makeHost(resolve(resolvedArgs)),
   };
 }
 
-/** Join CSS class names, dropping falsy entries. Used by the few stories that
- *  still build composed demos around the rendered components. */
+/** Join CSS class names, dropping falsy entries. Kept for any composed
+ *  demos that still build markup around the rendered components. */
 export function cls(...parts) {
   return parts.filter(Boolean).join(" ");
 }

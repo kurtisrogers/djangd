@@ -6,7 +6,7 @@ A **Django component library** built on **Material Design** primitives.
 > defaults, full CSS-custom-property theming, and a small registry that lets
 > any downstream app override built-ins or register entirely new components.
 
-[![Storybook](https://img.shields.io/badge/Storybook-online-ff4785)](https://kurtisrogers.github.io/djangd-framework/storybook/)
+[![Storybook](https://img.shields.io/badge/Storybook-online-ff4785)](https://kurtisrogers.github.io/djangd/)
 
 ---
 

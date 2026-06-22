@@ -126,15 +126,38 @@
     gap: var(--djangd-space-1);
   }
 
+  // Visible dot stays 8x8 but the button hit area is 24x24 to satisfy
+  // WCAG 2.2 SC 2.5.8 (Target Size Minimum). The inner span carries the
+  // visual treatment.
   &__indicator {
+    width: 24px;
+    height: 24px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+
+    &:focus-visible { @include djangd-focus-ring; outline-color: #fff; }
+  }
+
+  &__indicator-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    border: 0;
     background: rgba(255, 255, 255, .55);
-    cursor: pointer;
-    padding: 0;
-
-    &--active { background: #fff; transform: scale(1.2); }
+    transition: background var(--djangd-motion-fast) var(--djangd-easing-standard),
+                transform   var(--djangd-motion-fast) var(--djangd-easing-standard);
   }
+
+  &__indicator--active &__indicator-dot { background: #fff; transform: scale(1.4); }
+}
+
+// Respect prefers-reduced-motion (WCAG SC 2.3.3, Animation from Interactions).
+@media (prefers-reduced-motion: reduce) {
+  .djangd-carousel__track,
+  .djangd-carousel__indicator-dot { transition: none; }
 }

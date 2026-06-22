@@ -386,9 +386,9 @@ export const Carousel = {
     <button type="button" class="djangd-icon-button mdc-icon-button djangd-carousel__control djangd-carousel__control--prev" aria-label="Previous"><i class="material-icons">chevron_left</i></button>
     <button type="button" class="djangd-icon-button mdc-icon-button djangd-carousel__control djangd-carousel__control--next" aria-label="Next"><i class="material-icons">chevron_right</i></button>
     <div class="djangd-carousel__indicators" role="tablist">
-      <button class="djangd-carousel__indicator djangd-carousel__indicator--active" role="tab" aria-selected="true"></button>
-      <button class="djangd-carousel__indicator" role="tab" aria-selected="false"></button>
-      <button class="djangd-carousel__indicator" role="tab" aria-selected="false"></button>
+      <button class="djangd-carousel__indicator djangd-carousel__indicator--active" role="tab" aria-selected="true" aria-label="Slide 1"><span class="djangd-carousel__indicator-dot" aria-hidden="true"></span></button>
+      <button class="djangd-carousel__indicator" role="tab" aria-selected="false" aria-label="Slide 2"><span class="djangd-carousel__indicator-dot" aria-hidden="true"></span></button>
+      <button class="djangd-carousel__indicator" role="tab" aria-selected="false" aria-label="Slide 3"><span class="djangd-carousel__indicator-dot" aria-hidden="true"></span></button>
     </div>
   </section>`,
 };

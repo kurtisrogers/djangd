@@ -14,6 +14,9 @@
     text-decoration: underline dotted;
     text-underline-offset: 3px;
     color: var(--djangd-color-primary);
+    border-radius: var(--djangd-radius-xs);
+
+    &:focus-visible { @include djangd-focus-ring; outline-offset: 4px; }
   }
 
   &__panel {
@@ -182,11 +185,17 @@
     align-items: center;
     gap: var(--djangd-space-2);
     padding: var(--djangd-space-2) var(--djangd-space-4);
+    min-height: 36px;
     cursor: pointer;
 
     &:hover,
     &[aria-selected="true"] {
       background: color-mix(in srgb, var(--djangd-color-primary) 8%, transparent);
+    }
+    &:focus-visible {
+      outline: none;
+      background: color-mix(in srgb, var(--djangd-color-primary) 14%, transparent);
+      box-shadow: inset 3px 0 0 0 var(--djangd-color-primary);
     }
   }
   &__icon { color: var(--djangd-color-on-surface-variant); }

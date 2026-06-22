@@ -11,7 +11,9 @@
   <div class="djangd-command__panel" role="combobox" aria-expanded="true" aria-owns="{{ cmd_id }}-list" aria-haspopup="listbox">
     <div class="djangd-command__searchbar">
       <i class="material-icons djangd-command__search-icon" aria-hidden="true">search</i>
-      <input class="djangd-command__input" type="text" role="searchbox" aria-controls="{{ cmd_id }}-list"
+      <label class="djangd-visually-hidden" for="{{ cmd_id }}-input">{{ label|default:'Command palette' }}</label>
+      <input class="djangd-command__input" type="text" id="{{ cmd_id }}-input"
+             role="searchbox" aria-controls="{{ cmd_id }}-list"
              placeholder="{{ placeholder }}" autocomplete="off" autofocus />
       <kbd class="djangd-kbd djangd-kbd--sm djangd-command__hint" aria-hidden="true">Esc</kbd>
     </div>

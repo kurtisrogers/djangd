@@ -5,12 +5,14 @@
   {% if id %}id="{{ id }}"{% endif %}
   {{ attrs|djangd_attrs }}>
   <div class="djangd-transfer-list__panel" data-side="source">
-    {% if source_title %}<div class="djangd-transfer-list__title">{{ source_title }}</div>{% endif %}
-    <ul class="djangd-transfer-list__items" role="listbox" aria-multiselectable="true" aria-label="{{ source_title|default:'Available items' }}">
+    {% if source_title %}<div class="djangd-transfer-list__title" id="{{ id|default:'djangd-transfer' }}-src">{{ source_title }}</div>{% endif %}
+    <ul class="djangd-transfer-list__items" aria-labelledby="{{ id|default:'djangd-transfer' }}-src">
       {% for item in source_items %}
-        <li class="djangd-transfer-list__item" role="option" data-value="{{ item.value|default:item }}" tabindex="0">
-          <input type="checkbox" class="djangd-transfer-list__checkbox" name="{{ name }}-source" value="{{ item.value|default:item }}" aria-label="{{ item.label|default:item }}" />
-          <span class="djangd-transfer-list__label">{{ item.label|default:item }}</span>
+        <li class="djangd-transfer-list__item">
+          <label class="djangd-transfer-list__row">
+            <input type="checkbox" class="djangd-transfer-list__checkbox" name="{{ name }}-source" value="{{ item.value|default:item }}" />
+            <span class="djangd-transfer-list__label">{{ item.label|default:item }}</span>
+          </label>
         </li>
       {% endfor %}
     </ul>
@@ -30,12 +32,14 @@
     </button>
   </div>
   <div class="djangd-transfer-list__panel" data-side="target">
-    {% if target_title %}<div class="djangd-transfer-list__title">{{ target_title }}</div>{% endif %}
-    <ul class="djangd-transfer-list__items" role="listbox" aria-multiselectable="true" aria-label="{{ target_title|default:'Selected items' }}">
+    {% if target_title %}<div class="djangd-transfer-list__title" id="{{ id|default:'djangd-transfer' }}-tgt">{{ target_title }}</div>{% endif %}
+    <ul class="djangd-transfer-list__items" aria-labelledby="{{ id|default:'djangd-transfer' }}-tgt">
       {% for item in target_items %}
-        <li class="djangd-transfer-list__item" role="option" data-value="{{ item.value|default:item }}" tabindex="0">
-          <input type="checkbox" class="djangd-transfer-list__checkbox" name="{{ name }}" value="{{ item.value|default:item }}" aria-label="{{ item.label|default:item }}" checked />
-          <span class="djangd-transfer-list__label">{{ item.label|default:item }}</span>
+        <li class="djangd-transfer-list__item">
+          <label class="djangd-transfer-list__row">
+            <input type="checkbox" class="djangd-transfer-list__checkbox" name="{{ name }}" value="{{ item.value|default:item }}" checked />
+            <span class="djangd-transfer-list__label">{{ item.label|default:item }}</span>
+          </label>
         </li>
       {% endfor %}
     </ul>

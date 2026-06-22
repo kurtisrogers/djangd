@@ -152,23 +152,34 @@
   }
 
   &__item {
+    margin: 0;
+  }
+
+  // The row is now a <label> wrapping the checkbox + label text. Clicking
+  // anywhere on the row toggles the checkbox natively — no JS required —
+  // and the focus ring lights up via :focus-within when the input is
+  // focused via keyboard (WCAG 2.4.7).
+  &__row {
     display: flex;
     align-items: center;
     gap: var(--djangd-space-2);
     padding: var(--djangd-space-2) var(--djangd-space-3);
+    min-height: 36px;
     cursor: pointer;
 
     &:hover {
       background: color-mix(in srgb, var(--djangd-color-primary) 8%, transparent);
     }
-    &:focus-visible {
-      outline: none;
+    &:focus-within {
       background: color-mix(in srgb, var(--djangd-color-primary) 12%, transparent);
+      box-shadow: inset 3px 0 0 0 var(--djangd-color-primary);
     }
   }
 
   &__checkbox {
     accent-color: var(--djangd-color-primary);
+    width: 18px;
+    height: 18px;
   }
 
   &__label {

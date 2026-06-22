@@ -39,7 +39,8 @@
                 class="djangd-carousel__indicator {% if forloop.counter0 == active %}djangd-carousel__indicator--active{% endif %}"
                 aria-label="Go to slide {{ forloop.counter }}"
                 aria-selected="{% if forloop.counter0 == active %}true{% else %}false{% endif %}"
-                aria-controls="{{ car_id }}-slide-{{ forloop.counter }}"></button>
+                aria-controls="{{ car_id }}-slide-{{ forloop.counter }}"
+                tabindex="{% if forloop.counter0 == active %}0{% else %}-1{% endif %}"><span class="djangd-carousel__indicator-dot" aria-hidden="true"></span></button>
       {% endfor %}
     </div>
   {% endif %}

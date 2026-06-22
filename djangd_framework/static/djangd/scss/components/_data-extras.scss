@@ -103,6 +103,7 @@
     align-items: center;
     gap: var(--djangd-space-2);
     padding: var(--djangd-space-1) var(--djangd-space-2);
+    min-height: 32px;
     border-radius: var(--djangd-radius-xs);
     cursor: pointer;
 
@@ -114,23 +115,31 @@
     color: var(--djangd-color-primary);
   }
 
+  &__item:focus-visible > &__row { @include djangd-focus-ring; }
+
+  // 24x24 hit area satisfies WCAG 2.2 SC 2.5.8 (Target Size Minimum).
   &__chevron {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
     border: 0;
     background: transparent;
     color: inherit;
     cursor: pointer;
     padding: 0;
+    border-radius: var(--djangd-radius-xs);
 
-    &--leaf { cursor: default; }
-    & i { font-size: 18px; }
+    &:hover { background: color-mix(in srgb, var(--djangd-color-primary) 8%, transparent); }
+    &:focus-visible { @include djangd-focus-ring; }
+
+    &--leaf { cursor: default; pointer-events: none; }
+    & i { font-size: 20px; }
   }
 
-  &__icon { color: var(--djangd-color-on-surface-variant); font-size: 18px; }
+  &__icon { color: var(--djangd-color-on-surface-variant); font-size: 20px; flex-shrink: 0; }
   &__label { flex: 1; }
 }
 
@@ -229,17 +238,21 @@
 
 // ---- Status dot -------------------------------------------------------------
 .djangd-status {
+  // Tone is conveyed both visually (dot colour) and by the visible label /
+  // aria-label, so colour is not the only channel (WCAG SC 1.4.1).
   display: inline-flex;
   align-items: center;
   gap: var(--djangd-space-2);
   font-family: var(--djangd-font-family);
   font-size: var(--djangd-text-label-large);
+  --djangd-status-color: var(--djangd-color-on-surface-variant);
 
   &__dot {
+    position: relative;
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--djangd-color-on-surface-variant);
+    background: var(--djangd-status-color);
     flex-shrink: 0;
   }
 
@@ -249,25 +262,23 @@
   &--away,    &--warning { --djangd-status-color: var(--djangd-color-warning); }
   &--info                { --djangd-status-color: var(--djangd-color-info); }
 
-  &[class*="djangd-status--"] &__dot { background: var(--djangd-status-color, var(--djangd-color-on-surface-variant)); }
-
   &--pulse &__dot::after {
     content: "";
     position: absolute;
     inset: -4px;
     border-radius: 50%;
-    background: var(--djangd-status-color, var(--djangd-color-on-surface-variant));
+    background: var(--djangd-status-color);
     opacity: .4;
     animation: djangd-status-pulse 1.4s ease-out infinite;
-  }
-  &--pulse &__dot {
-    position: relative;
-    overflow: visible;
   }
 }
 @keyframes djangd-status-pulse {
   0%   { transform: scale(.6); opacity: .6; }
   100% { transform: scale(1.6); opacity: 0; }
+}
+// Respect users who prefer reduced motion (WCAG SC 2.3.3).
+@media (prefers-reduced-motion: reduce) {
+  .djangd-status--pulse .djangd-status__dot::after { animation: none; }
 }
 
 // ---- Calendar grid ----------------------------------------------------------
@@ -322,6 +333,7 @@
     cursor: pointer;
 
     &:hover { background: color-mix(in srgb, var(--djangd-color-primary) 12%, transparent); }
+    &:focus-visible { @include djangd-focus-ring; }
   }
 
   &__cell--outside &__day { color: var(--djangd-color-on-surface-variant); opacity: .5; }

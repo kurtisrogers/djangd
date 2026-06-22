@@ -1,0 +1,15 @@
+{% load djangd %}{% with pop_id=id|default:"djangd-popover" %}
+<div
+  class="djangd-popover djangd-popover--{{ placement }} {% if open %}djangd-popover--open{% endif %} {{ extra_classes }}"
+  id="{{ pop_id }}"
+  role="dialog"
+  aria-hidden="{% if open %}false{% else %}true{% endif %}"
+  {% if anchor %}data-anchor="{{ anchor }}"{% endif %}
+  {% if label %}aria-label="{{ label }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  <div class="djangd-popover__surface">
+    {% if arrow %}<span class="djangd-popover__arrow" aria-hidden="true"></span>{% endif %}
+    <div class="djangd-popover__content">{{ children }}</div>
+  </div>
+</div>
+{% endwith %}

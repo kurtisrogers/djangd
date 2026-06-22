@@ -1,0 +1,8 @@
+{% load djangd %}<div
+  class="djangd-backdrop {% if open %}djangd-backdrop--open{% endif %} {% if invisible %}djangd-backdrop--invisible{% endif %} {{ extra_classes }}"
+  role="presentation"
+  aria-hidden="{% if open %}false{% else %}true{% endif %}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  {{ children }}
+</div>

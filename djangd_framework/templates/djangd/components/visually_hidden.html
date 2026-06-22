@@ -1,0 +1,4 @@
+{% load djangd %}<{{ tag|default:"span" }}
+  class="djangd-visually-hidden {{ extra_classes }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>{{ text }}{{ children }}</{{ tag|default:"span" }}>

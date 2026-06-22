@@ -1,0 +1,35 @@
+{% load djangd %}{% with cmd_id=id|default:"djangd-command" %}
+<div
+  class="djangd-command {% if open %}djangd-command--open{% endif %} {{ extra_classes }}"
+  id="{{ cmd_id }}"
+  role="dialog"
+  aria-modal="true"
+  aria-label="{{ label|default:'Command palette' }}"
+  aria-hidden="{% if open %}false{% else %}true{% endif %}"
+  {{ attrs|djangd_attrs }}>
+  <div class="djangd-command__scrim" aria-hidden="true" data-dismiss="command"></div>
+  <div class="djangd-command__panel" role="combobox" aria-expanded="true" aria-owns="{{ cmd_id }}-list" aria-haspopup="listbox">
+    <div class="djangd-command__searchbar">
+      <i class="material-icons djangd-command__search-icon" aria-hidden="true">search</i>
+      <label class="djangd-visually-hidden" for="{{ cmd_id }}-input">{{ label|default:'Command palette' }}</label>
+      <input class="djangd-command__input" type="text" id="{{ cmd_id }}-input"
+             role="searchbox" aria-controls="{{ cmd_id }}-list"
+             placeholder="{{ placeholder }}" autocomplete="off" autofocus />
+      <kbd class="djangd-kbd djangd-kbd--sm djangd-command__hint" aria-hidden="true">Esc</kbd>
+    </div>
+    <ul class="djangd-command__list" id="{{ cmd_id }}-list" role="listbox">
+      {% for group in groups %}
+        {% if group.heading %}<li class="djangd-command__heading" role="presentation">{{ group.heading }}</li>{% endif %}
+        {% for command in group.commands %}
+          <li class="djangd-command__option" role="option" data-value="{{ command.value|default:command.label }}" tabindex="-1">
+            {% if command.icon %}<i class="material-icons djangd-command__icon" aria-hidden="true">{{ command.icon }}</i>{% endif %}
+            <span class="djangd-command__label">{{ command.label }}</span>
+            {% if command.shortcut %}<kbd class="djangd-kbd djangd-kbd--sm">{{ command.shortcut }}</kbd>{% endif %}
+          </li>
+        {% endfor %}
+      {% endfor %}
+    </ul>
+    {% if empty %}<div class="djangd-command__empty" hidden>{{ empty }}</div>{% endif %}
+  </div>
+</div>
+{% endwith %}

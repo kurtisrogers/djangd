@@ -1,0 +1,43 @@
+// =============================================================================
+// Link
+// =============================================================================
+
+@use "../abstracts/mixins" as *;
+
+.djangd-link {
+  color: var(--djangd-color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--djangd-motion-fast) var(--djangd-easing-standard);
+
+  &:hover  { color: color-mix(in srgb, var(--djangd-color-primary) 80%, black); }
+  &:active { color: color-mix(in srgb, var(--djangd-color-primary) 60%, black); }
+
+  &:focus-visible { @include djangd-focus-ring; border-radius: var(--djangd-radius-xs); }
+
+  // --- Variants -------------------------------------------------------------
+  &--body    { font-size: var(--djangd-text-body-medium); }
+  &--button  {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--djangd-space-1);
+    text-decoration: none;
+    padding: var(--djangd-space-1) var(--djangd-space-2);
+    border-radius: var(--djangd-radius-pill);
+
+    &:hover { background: color-mix(in srgb, var(--djangd-color-primary) 8%, transparent); }
+  }
+  &--inherit { color: inherit; }
+
+  // --- Underline ------------------------------------------------------------
+  &--none    { text-decoration: none; }
+  &--hover   { text-decoration: none; &:hover { text-decoration: underline; } }
+  &--always  { text-decoration: underline; }
+
+  // --- Color ----------------------------------------------------------------
+  &--primary   { color: var(--djangd-color-primary); }
+  &--secondary { color: var(--djangd-color-secondary); }
+  &--error     { color: var(--djangd-color-error); }
+  &--success   { color: var(--djangd-color-success); }
+  &--warning   { color: var(--djangd-color-warning); }
+}

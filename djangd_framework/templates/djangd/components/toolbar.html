@@ -1,0 +1,9 @@
+{% load djangd %}<div
+  class="djangd-toolbar djangd-toolbar--{{ density }} {% if elevated %}djangd-toolbar--elevated{% endif %} {{ extra_classes }}"
+  role="toolbar"
+  aria-label="{{ label|default:'Toolbar' }}"
+  aria-orientation="{{ orientation }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  {% for item in items %}{{ item|safe }}{% endfor %}{{ children }}
+</div>

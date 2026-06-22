@@ -1,0 +1,25 @@
+{% load djangd %}<div
+  class="djangd-avatar-group djangd-avatar-group--{{ size }} {{ extra_classes }}"
+  role="group"
+  {% if label %}aria-label="{{ label }}"{% endif %}
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  {% for avatar in avatars %}{% if forloop.counter0 < max %}
+    <span class="djangd-avatar djangd-avatar--{{ size }} djangd-avatar--{{ shape }} djangd-avatar-group__item"
+          {% if avatar.alt %}title="{{ avatar.alt }}"{% endif %}>
+      {% if avatar.src %}
+        <img class="djangd-avatar__image" src="{{ avatar.src }}" alt="{{ avatar.alt|default:'' }}" />
+      {% elif avatar.initials %}
+        <span class="djangd-avatar__initials" aria-label="{{ avatar.alt|default:avatar.initials }}">{{ avatar.initials }}</span>
+      {% else %}
+        <i class="material-icons djangd-avatar__icon" aria-label="{{ avatar.alt|default:'User' }}">person</i>
+      {% endif %}
+    </span>
+  {% endif %}{% endfor %}
+  {% if avatars|length > max %}
+    <span class="djangd-avatar djangd-avatar--{{ size }} djangd-avatar--{{ shape }} djangd-avatar-group__item djangd-avatar-group__overflow"
+          aria-label="{{ avatars|length|djangd_sub:max }} more">
+      <span class="djangd-avatar__initials">+{{ avatars|length|djangd_sub:max }}</span>
+    </span>
+  {% endif %}
+</div>

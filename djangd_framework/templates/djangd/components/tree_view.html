@@ -1,0 +1,10 @@
+{% load djangd %}<ul
+  class="djangd-tree-view {{ extra_classes }}"
+  role="tree"
+  {% if label %}aria-label="{{ label }}"{% endif %}
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  {% for node in nodes %}
+    {% include "djangd/components/_tree_node.html" with node=node level=1 %}
+  {% endfor %}
+</ul>

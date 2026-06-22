@@ -1,0 +1,6 @@
+{% load djangd %}<a
+  class="djangd-link djangd-link--{{ variant }} djangd-link--{{ underline }} djangd-link--{{ color }} {{ extra_classes }}"
+  href="{{ href }}"
+  {% if target %}target="{{ target }}"{% if target == "_blank" %} rel="noopener noreferrer"{% endif %}{% endif %}
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>{{ text }}{{ children }}</a>

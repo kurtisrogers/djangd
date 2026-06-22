@@ -28,6 +28,7 @@ from dataclasses import dataclass, field
 from typing import Any, ClassVar, Mapping
 
 from django.template.loader import render_to_string
+from django.utils.safestring import SafeString, mark_safe
 
 
 _NAME_RE = re.compile(r"^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$")
@@ -157,8 +158,14 @@ class Component:
         # Layer caller props on top.
         for k, v in self.props.items():
             ctx[k] = v
-        # Common derived props for every component.
-        ctx["children"] = self.children
+        # Children are pre-rendered HTML (either from the {% component %}
+        # template tag's nodelist or from a direct Python caller passing
+        # rendered child components). Treat them as safe so Django doesn't
+        # double-escape the markup. Plain string callers who want escaping
+        # should escape upstream — children is by contract "raw HTML".
+        ctx["children"] = (
+            self.children if isinstance(self.children, SafeString) else mark_safe(self.children or "")
+        )
         ctx["_component_name"] = self.name
         # BEM block class — every component gets ``mdc-<block>`` plus our own
         # ``djangd-<block>`` hook for override-only styles.

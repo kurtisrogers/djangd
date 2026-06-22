@@ -1,0 +1,29 @@
+{% load djangd %}<li
+  class="djangd-tree-view__item {% if node.expanded %}djangd-tree-view__item--expanded{% endif %} {% if node.selected %}djangd-tree-view__item--selected{% endif %}"
+  role="treeitem"
+  aria-level="{{ level }}"
+  {% if node.children %}aria-expanded="{% if node.expanded %}true{% else %}false{% endif %}"{% endif %}
+  {% if node.selected %}aria-selected="true"{% endif %}
+  tabindex="-1">
+  <div class="djangd-tree-view__row">
+    {% if node.children %}
+      <button
+        type="button"
+        class="djangd-tree-view__chevron"
+        aria-label="{% if node.expanded %}Collapse{% else %}Expand{% endif %}">
+        <i class="material-icons" aria-hidden="true">{% if node.expanded %}expand_more{% else %}chevron_right{% endif %}</i>
+      </button>
+    {% else %}
+      <span class="djangd-tree-view__chevron djangd-tree-view__chevron--leaf" aria-hidden="true"></span>
+    {% endif %}
+    {% if node.icon %}<i class="material-icons djangd-tree-view__icon" aria-hidden="true">{{ node.icon }}</i>{% endif %}
+    <span class="djangd-tree-view__label">{{ node.label }}</span>
+  </div>
+  {% if node.children %}
+    <ul class="djangd-tree-view__group" role="group">
+      {% for child in node.children %}
+        {% include "djangd/components/_tree_node.html" with node=child level=level|add:1 %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+</li>

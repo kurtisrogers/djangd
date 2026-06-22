@@ -1,0 +1,48 @@
+{% load djangd %}{% with car_id=id|default:"djangd-carousel" %}
+<section
+  class="djangd-carousel {{ extra_classes }}"
+  id="{{ car_id }}"
+  aria-roledescription="carousel"
+  aria-label="{{ label|default:'Carousel' }}"
+  {{ attrs|djangd_attrs }}>
+  <div class="djangd-carousel__viewport" tabindex="0">
+    <ul class="djangd-carousel__track" role="list">
+      {% for slide in slides %}
+        <li class="djangd-carousel__slide {% if forloop.counter0 == active %}djangd-carousel__slide--active{% endif %}"
+            id="{{ car_id }}-slide-{{ forloop.counter }}"
+            aria-roledescription="slide"
+            aria-label="Slide {{ forloop.counter }} of {{ slides|length }}"
+            {% if forloop.counter0 != active %}aria-hidden="true"{% endif %}>
+          {% if slide.image %}
+            <img src="{{ slide.image }}" alt="{{ slide.alt|default:'' }}" class="djangd-carousel__image" />
+          {% endif %}
+          {% if slide.caption %}<div class="djangd-carousel__caption">{{ slide.caption }}</div>{% endif %}
+          {{ slide.html|safe }}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% if controls %}
+    <button type="button" class="djangd-icon-button mdc-icon-button djangd-carousel__control djangd-carousel__control--prev"
+            aria-label="Previous slide" aria-controls="{{ car_id }}" data-nav="prev">
+      <i class="material-icons" aria-hidden="true">chevron_left</i>
+    </button>
+    <button type="button" class="djangd-icon-button mdc-icon-button djangd-carousel__control djangd-carousel__control--next"
+            aria-label="Next slide" aria-controls="{{ car_id }}" data-nav="next">
+      <i class="material-icons" aria-hidden="true">chevron_right</i>
+    </button>
+  {% endif %}
+  {% if indicators %}
+    <div class="djangd-carousel__indicators" role="tablist" aria-label="Select slide">
+      {% for slide in slides %}
+        <button type="button" role="tab"
+                class="djangd-carousel__indicator {% if forloop.counter0 == active %}djangd-carousel__indicator--active{% endif %}"
+                aria-label="Go to slide {{ forloop.counter }}"
+                aria-selected="{% if forloop.counter0 == active %}true{% else %}false{% endif %}"
+                aria-controls="{{ car_id }}-slide-{{ forloop.counter }}"
+                tabindex="{% if forloop.counter0 == active %}0{% else %}-1{% endif %}"><span class="djangd-carousel__indicator-dot" aria-hidden="true"></span></button>
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>
+{% endwith %}

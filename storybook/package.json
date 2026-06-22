@@ -4,10 +4,10 @@
   "private": true,
   "description": "Storybook for djangd-framework — built and published to GitHub Pages.",
   "scripts": {
-    "storybook": "npm run build:css && storybook dev -p 6006",
+    "storybook": "npm run build:css && npm run render:stories && storybook dev -p 6006",
     "build:css": "sass ../djangd_framework/static/djangd/scss/djangd.scss ../djangd_framework/static/djangd/dist/djangd.css --no-source-map --style=compressed",
-    "build": "npm run build:css && storybook build -o ../docs/storybook",
-    "sync-django": "node ./scripts/sync-django.mjs"
+    "render:stories": "python3 scripts/render.py",
+    "build": "npm run build:css && npm run render:stories && storybook build -o ../docs/storybook"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^8.2.0",

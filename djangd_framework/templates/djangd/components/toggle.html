@@ -1,0 +1,11 @@
+{% load djangd %}<button
+  class="djangd-toggle djangd-toggle--{{ variant }} djangd-toggle--{{ size }} {% if pressed %}djangd-toggle--on{% endif %} {{ extra_classes }}"
+  type="button"
+  aria-pressed="{% if pressed %}true{% else %}false{% endif %}"
+  {% if disabled %}disabled aria-disabled="true"{% endif %}
+  {% if label %}aria-label="{{ label }}"{% endif %}
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  {% if icon %}<i class="material-icons djangd-toggle__icon" aria-hidden="true">{{ icon }}</i>{% endif %}
+  {% if text %}<span class="djangd-toggle__label">{{ text }}</span>{% endif %}{{ children }}
+</button>

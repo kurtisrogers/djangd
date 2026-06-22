@@ -1,0 +1,4 @@
+{% load djangd %}<{{ tag|default:"div" }}
+  class="djangd-box {% if padding %}djangd-box--p-{{ padding }}{% endif %} {% if margin %}djangd-box--m-{{ margin }}{% endif %} {% if display %}djangd-box--{{ display }}{% endif %} {% if align %}djangd-box--align-{{ align }}{% endif %} {% if justify %}djangd-box--justify-{{ justify }}{% endif %} {% if rounded %}djangd-box--rounded-{{ rounded }}{% endif %} {% if surface %}djangd-box--surface-{{ surface }}{% endif %} {{ extra_classes }}"
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>{{ children }}</{{ tag|default:"div" }}>

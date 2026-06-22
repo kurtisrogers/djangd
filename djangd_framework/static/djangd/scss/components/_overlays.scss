@@ -1,0 +1,81 @@
+// =============================================================================
+// Overlays: backdrop, modal, popover
+// =============================================================================
+
+@use "../abstracts/mixins" as *;
+
+// ---- Backdrop ---------------------------------------------------------------
+.djangd-backdrop {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, .5);
+  z-index: 1200;
+  transition: opacity var(--djangd-motion-base) var(--djangd-easing-standard);
+
+  &--open { display: flex; }
+  &--invisible { background: transparent; }
+}
+
+// ---- Modal ------------------------------------------------------------------
+// Built on the native HTML <dialog> element. Rendering with the `open`
+// attribute shows the dialog as a non-modal popover; calling
+// `dialog.showModal()` from JS promotes it to the top layer, traps focus,
+// enables the Esc key, and lights up the ::backdrop pseudo styled below.
+.djangd-modal {
+  background: var(--djangd-color-surface);
+  color: var(--djangd-color-on-surface);
+  border: 0;
+  border-radius: var(--djangd-radius-lg);
+  padding: var(--djangd-space-5);
+  max-width: min(560px, calc(100% - 32px));
+  width: 100%;
+  @include djangd-elevation(3);
+
+  &::backdrop {
+    background: rgba(0, 0, 0, .5);
+  }
+
+  &:focus-visible { outline: none; }
+
+  &[open] { margin: auto; }
+}
+
+// ---- Popover ----------------------------------------------------------------
+.djangd-popover {
+  position: absolute;
+  display: none;
+  z-index: 1400;
+
+  &--open { display: block; }
+
+  &__surface {
+    position: relative;
+    background: var(--djangd-color-surface);
+    color: var(--djangd-color-on-surface);
+    border-radius: var(--djangd-radius-sm);
+    @include djangd-elevation(3);
+    min-width: 160px;
+    max-width: 320px;
+  }
+
+  &__content {
+    padding: var(--djangd-space-3) var(--djangd-space-4);
+  }
+
+  &__arrow {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: inherit;
+    transform: rotate(45deg);
+    background: var(--djangd-color-surface);
+  }
+
+  &--top    &__arrow { bottom: -6px; left: 50%; margin-left: -6px; }
+  &--bottom &__arrow { top:    -6px; left: 50%; margin-left: -6px; }
+  &--left   &__arrow { right:  -6px; top: 50%;  margin-top: -6px; }
+  &--right  &__arrow { left:   -6px; top: 50%;  margin-top: -6px; }
+}

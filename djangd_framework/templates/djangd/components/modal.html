@@ -1,0 +1,12 @@
+{% load djangd %}{% with modal_id=id|default:"djangd-modal" %}
+<dialog
+  class="djangd-modal {{ extra_classes }}"
+  id="{{ modal_id }}"
+  {% if open %}open{% endif %}
+  {% if label %}aria-label="{{ label }}"{% endif %}
+  {% if labelledby %}aria-labelledby="{{ labelledby }}"{% endif %}
+  {% if describedby %}aria-describedby="{{ describedby }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  {{ children }}
+</dialog>
+{% endwith %}

@@ -1,0 +1,186 @@
+// =============================================================================
+// Inputs (extras): input_otp, file_upload, toggle, date_picker
+// =============================================================================
+
+@use "../abstracts/mixins" as *;
+
+// ---- One-time password ------------------------------------------------------
+.djangd-input-otp {
+  display: flex;
+  flex-direction: column;
+  gap: var(--djangd-space-2);
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font-family: var(--djangd-font-family);
+  color: var(--djangd-color-on-surface);
+
+  &__legend {
+    font-size: var(--djangd-text-label-large);
+    color: var(--djangd-color-on-surface-variant);
+    padding: 0;
+  }
+
+  &__slots {
+    display: flex;
+    gap: var(--djangd-space-2);
+  }
+
+  &__slot {
+    width: 2.5rem;
+    height: 3rem;
+    text-align: center;
+    font-size: var(--djangd-text-title-large);
+    font-family: var(--djangd-font-family-mono);
+    border: 1px solid var(--djangd-color-outline);
+    border-radius: var(--djangd-radius-sm);
+    background: var(--djangd-color-surface);
+    color: var(--djangd-color-on-surface);
+    caret-color: var(--djangd-color-primary);
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--djangd-color-primary);
+      box-shadow: 0 0 0 1px var(--djangd-color-primary);
+    }
+  }
+
+  &__helper {
+    font-size: var(--djangd-text-body-small);
+    color: var(--djangd-color-on-surface-variant);
+  }
+
+  &--disabled { opacity: .38; pointer-events: none; }
+}
+
+// ---- File upload ------------------------------------------------------------
+.djangd-file-upload {
+  display: block;
+  position: relative;
+  cursor: pointer;
+
+  &__input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &__surface {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--djangd-space-2);
+    padding: var(--djangd-space-5);
+    border: 2px dashed var(--djangd-color-outline);
+    border-radius: var(--djangd-radius-md);
+    background: var(--djangd-color-surface-variant);
+    color: var(--djangd-color-on-surface-variant);
+    text-align: center;
+    transition: border-color var(--djangd-motion-fast) var(--djangd-easing-standard),
+                background  var(--djangd-motion-fast) var(--djangd-easing-standard);
+  }
+
+  &__icon { font-size: 2rem; }
+  &__title { font-weight: 500; color: var(--djangd-color-on-surface); }
+  &__hint  { font-size: var(--djangd-text-body-small); }
+
+  &:hover &__surface,
+  &__input:focus-visible + &__surface {
+    border-color: var(--djangd-color-primary);
+    background: color-mix(in srgb, var(--djangd-color-primary) 6%, var(--djangd-color-surface-variant));
+  }
+
+  &--disabled { opacity: .38; pointer-events: none; }
+}
+
+// ---- Toggle (single press-to-activate button) -------------------------------
+.djangd-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--djangd-space-1);
+  min-height: 40px;
+  padding: var(--djangd-space-2) var(--djangd-space-3);
+  border: 1px solid transparent;
+  border-radius: var(--djangd-radius-sm);
+  background: transparent;
+  color: var(--djangd-color-on-surface);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--djangd-motion-fast) var(--djangd-easing-standard);
+
+  &:hover { background: color-mix(in srgb, var(--djangd-color-primary) 8%, transparent); }
+  &:focus-visible { @include djangd-focus-ring; }
+
+  &--outline { border-color: var(--djangd-color-outline); }
+  &--small  { min-height: 32px; padding: var(--djangd-space-1) var(--djangd-space-2); font-size: var(--djangd-text-label-medium); }
+  &--medium { min-height: 40px; }
+  &--large  { min-height: 48px; padding: var(--djangd-space-3) var(--djangd-space-4); }
+
+  &--on,
+  &[aria-pressed="true"] {
+    background: var(--djangd-color-primary-container);
+    color: var(--djangd-color-on-primary-container);
+    border-color: var(--djangd-color-primary-container);
+  }
+
+  &[disabled], &[aria-disabled="true"] {
+    opacity: .38;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// ---- Date picker ------------------------------------------------------------
+.djangd-date-picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--djangd-space-1);
+  font-family: var(--djangd-font-family);
+
+  &__label {
+    font-size: var(--djangd-text-label-large);
+    color: var(--djangd-color-on-surface-variant);
+  }
+
+  &__field {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__input {
+    width: 100%;
+    min-height: 40px;
+    padding: var(--djangd-space-2) var(--djangd-space-3);
+    padding-right: 2.25rem;
+    border: 1px solid var(--djangd-color-outline);
+    border-radius: var(--djangd-radius-xs);
+    background: var(--djangd-color-surface);
+    color: var(--djangd-color-on-surface);
+    font: inherit;
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--djangd-color-primary);
+      box-shadow: 0 0 0 1px var(--djangd-color-primary);
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    right: var(--djangd-space-2);
+    pointer-events: none;
+    color: var(--djangd-color-on-surface-variant);
+  }
+
+  &__helper {
+    font-size: var(--djangd-text-body-small);
+    color: var(--djangd-color-on-surface-variant);
+  }
+
+  &--disabled { opacity: .38; pointer-events: none; }
+}

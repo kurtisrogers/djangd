@@ -35,5 +35,9 @@
 @use "components/overlays";
 @use "components/link";
 @use "components/box";
+@use "components/inputs-extras";
+@use "components/data-extras";
+@use "components/overlays-extras";
+@use "components/layout-extras";
 
 @use "themes/default" as *;

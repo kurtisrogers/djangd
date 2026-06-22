@@ -1,0 +1,140 @@
+// =============================================================================
+// Layout (extras): aspect_ratio, scroll_area, toolbar, carousel.
+// (visually_hidden is already provided by base/_reset.scss via the
+// djangd-visually-hidden mixin.)
+// =============================================================================
+
+@use "../abstracts/mixins" as *;
+
+// ---- Aspect ratio -----------------------------------------------------------
+.djangd-aspect-ratio {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+
+  > * { width: 100%; height: 100%; object-fit: cover; display: block; }
+}
+
+// ---- Scroll area ------------------------------------------------------------
+.djangd-scroll-area {
+  position: relative;
+  border: 1px solid var(--djangd-color-outline);
+  border-radius: var(--djangd-radius-sm);
+  overflow: auto;
+
+  &--vertical   { overflow-y: auto; overflow-x: hidden; }
+  &--horizontal { overflow-x: auto; overflow-y: hidden; }
+  &--both       { overflow: auto; }
+
+  // Slim, themed scrollbars (WebKit + Firefox).
+  scrollbar-width: thin;
+  scrollbar-color: var(--djangd-color-outline) transparent;
+
+  &::-webkit-scrollbar { width: 8px; height: 8px; }
+  &::-webkit-scrollbar-thumb {
+    background: var(--djangd-color-outline);
+    border-radius: var(--djangd-radius-pill);
+  }
+  &::-webkit-scrollbar-track { background: transparent; }
+
+  &__viewport { padding: var(--djangd-space-3); }
+
+  &:focus-visible { @include djangd-focus-ring; }
+}
+
+// ---- Toolbar ----------------------------------------------------------------
+.djangd-toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--djangd-space-1);
+  padding: var(--djangd-space-1) var(--djangd-space-2);
+  background: var(--djangd-color-surface);
+  border-radius: var(--djangd-radius-sm);
+  color: var(--djangd-color-on-surface);
+
+  &--dense   { padding: 2px var(--djangd-space-1); gap: 2px; }
+  &--regular { padding: var(--djangd-space-1) var(--djangd-space-2); }
+  &--spacious { padding: var(--djangd-space-2) var(--djangd-space-3); gap: var(--djangd-space-2); }
+
+  &--elevated { @include djangd-elevation(1); }
+
+  &[aria-orientation="vertical"] {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+// ---- Carousel ---------------------------------------------------------------
+.djangd-carousel {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--djangd-radius-md);
+
+  &__viewport { overflow: hidden; }
+
+  &__track {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    transition: transform var(--djangd-motion-slow) var(--djangd-easing-emphasized);
+  }
+
+  &__slide {
+    flex: 0 0 100%;
+    position: relative;
+    min-width: 0;
+  }
+
+  &__image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  &__caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--djangd-space-3) var(--djangd-space-4);
+    background: linear-gradient(0deg, rgba(0,0,0,.65), rgba(0,0,0,0));
+    color: #fff;
+  }
+
+  &__control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, .35);
+    color: #fff;
+    @include djangd-elevation(2);
+
+    &:hover { background: rgba(0, 0, 0, .55); }
+
+    &--prev { left: var(--djangd-space-2); }
+    &--next { right: var(--djangd-space-2); }
+  }
+
+  &__indicators {
+    position: absolute;
+    bottom: var(--djangd-space-2);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--djangd-space-1);
+  }
+
+  &__indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(255, 255, 255, .55);
+    cursor: pointer;
+    padding: 0;
+
+    &--active { background: #fff; transform: scale(1.2); }
+  }
+}

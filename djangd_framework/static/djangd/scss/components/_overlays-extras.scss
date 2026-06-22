@@ -1,0 +1,229 @@
+// =============================================================================
+// Overlays (extras): hover_card, sheet, command, empty_state
+// =============================================================================
+
+@use "../abstracts/mixins" as *;
+
+// ---- Hover card -------------------------------------------------------------
+.djangd-hover-card {
+  position: relative;
+  display: inline-flex;
+
+  &__trigger {
+    cursor: pointer;
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+    color: var(--djangd-color-primary);
+  }
+
+  &__panel {
+    position: absolute;
+    z-index: 1450;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity var(--djangd-motion-fast) var(--djangd-easing-standard),
+                visibility var(--djangd-motion-fast) var(--djangd-easing-standard);
+  }
+
+  &__surface {
+    display: block;
+    min-width: 240px;
+    max-width: 360px;
+    padding: var(--djangd-space-3);
+    background: var(--djangd-color-surface);
+    color: var(--djangd-color-on-surface);
+    border-radius: var(--djangd-radius-sm);
+    @include djangd-elevation(3);
+    font-size: var(--djangd-text-body-medium);
+  }
+
+  &__panel--top    { bottom: calc(100% + 8px); left: 0; }
+  &__panel--bottom { top:    calc(100% + 8px); left: 0; }
+  &__panel--left   { right:  calc(100% + 8px); top: 0; }
+  &__panel--right  { left:   calc(100% + 8px); top: 0; }
+
+  &:hover &__panel,
+  &__trigger:focus-visible + &__panel {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+// ---- Sheet (side panel) -----------------------------------------------------
+.djangd-sheet {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 1350;
+
+  &--open { display: block; }
+
+  &__scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .5);
+  }
+
+  &__panel {
+    position: absolute;
+    background: var(--djangd-color-surface);
+    color: var(--djangd-color-on-surface);
+    display: flex;
+    flex-direction: column;
+    @include djangd-elevation(4);
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  &--left   &__panel { top: 0; bottom: 0; left: 0;  width: min(420px, 90%); }
+  &--right  &__panel { top: 0; bottom: 0; right: 0; width: min(420px, 90%); }
+  &--top    &__panel { left: 0; right: 0; top: 0;    height: min(60vh, 100%); }
+  &--bottom &__panel {
+    left: 0; right: 0; bottom: 0;
+    height: min(60vh, 100%);
+    border-top-left-radius: var(--djangd-radius-lg);
+    border-top-right-radius: var(--djangd-radius-lg);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: var(--djangd-space-2);
+    padding: var(--djangd-space-3) var(--djangd-space-4);
+    border-bottom: 1px solid var(--djangd-color-outline);
+  }
+  &__title { margin: 0; font-size: var(--djangd-text-title-medium); font-weight: 500; flex: 1; }
+  &__close { margin-left: auto; }
+  &__body {
+    flex: 1;
+    padding: var(--djangd-space-4);
+    overflow-y: auto;
+  }
+  &__footer {
+    display: flex;
+    gap: var(--djangd-space-2);
+    justify-content: flex-end;
+    padding: var(--djangd-space-3) var(--djangd-space-4);
+    border-top: 1px solid var(--djangd-color-outline);
+  }
+}
+
+// ---- Command palette --------------------------------------------------------
+.djangd-command {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 1500;
+
+  &--open { display: block; }
+
+  &__scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .5);
+  }
+
+  &__panel {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(560px, 92%);
+    background: var(--djangd-color-surface);
+    color: var(--djangd-color-on-surface);
+    border-radius: var(--djangd-radius-lg);
+    @include djangd-elevation(4);
+    display: flex;
+    flex-direction: column;
+    max-height: 70vh;
+    overflow: hidden;
+  }
+
+  &__searchbar {
+    display: flex;
+    align-items: center;
+    gap: var(--djangd-space-2);
+    padding: var(--djangd-space-3) var(--djangd-space-4);
+    border-bottom: 1px solid var(--djangd-color-outline);
+  }
+
+  &__search-icon { color: var(--djangd-color-on-surface-variant); }
+
+  &__input {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: var(--djangd-text-title-medium);
+    outline: none;
+  }
+
+  &__hint { margin-left: auto; }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: var(--djangd-space-1) 0;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  &__heading {
+    padding: var(--djangd-space-2) var(--djangd-space-4) var(--djangd-space-1);
+    font-size: var(--djangd-text-label-small);
+    text-transform: uppercase;
+    color: var(--djangd-color-on-surface-variant);
+    font-weight: 500;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: var(--djangd-space-2);
+    padding: var(--djangd-space-2) var(--djangd-space-4);
+    cursor: pointer;
+
+    &:hover,
+    &[aria-selected="true"] {
+      background: color-mix(in srgb, var(--djangd-color-primary) 8%, transparent);
+    }
+  }
+  &__icon { color: var(--djangd-color-on-surface-variant); }
+  &__label { flex: 1; }
+  &__empty { padding: var(--djangd-space-4); text-align: center; color: var(--djangd-color-on-surface-variant); }
+}
+
+// ---- Empty state ------------------------------------------------------------
+.djangd-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--djangd-space-2);
+  padding: var(--djangd-space-6) var(--djangd-space-4);
+  text-align: center;
+  color: var(--djangd-color-on-surface);
+  font-family: var(--djangd-font-family);
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--djangd-color-surface-variant);
+    color: var(--djangd-color-on-surface-variant);
+    margin-bottom: var(--djangd-space-2);
+    & i { font-size: 32px; }
+  }
+
+  &__title { margin: 0; font-size: var(--djangd-text-title-large); font-weight: 500; }
+  &__description { margin: 0; color: var(--djangd-color-on-surface-variant); max-width: 36ch; }
+  &__actions {
+    display: flex;
+    gap: var(--djangd-space-2);
+    margin-top: var(--djangd-space-3);
+  }
+}

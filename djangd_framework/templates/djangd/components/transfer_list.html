@@ -1,0 +1,43 @@
+{% load djangd %}<div
+  class="djangd-transfer-list {{ extra_classes }}"
+  role="group"
+  {% if label %}aria-label="{{ label }}"{% endif %}
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  <div class="djangd-transfer-list__panel" data-side="source">
+    {% if source_title %}<div class="djangd-transfer-list__title">{{ source_title }}</div>{% endif %}
+    <ul class="djangd-transfer-list__items" role="listbox" aria-multiselectable="true" aria-label="{{ source_title|default:'Available items' }}">
+      {% for item in source_items %}
+        <li class="djangd-transfer-list__item" role="option" data-value="{{ item.value|default:item }}" tabindex="0">
+          <input type="checkbox" class="djangd-transfer-list__checkbox" name="{{ name }}-source" value="{{ item.value|default:item }}" aria-label="{{ item.label|default:item }}" />
+          <span class="djangd-transfer-list__label">{{ item.label|default:item }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="djangd-transfer-list__controls" role="group" aria-label="Transfer controls">
+    <button type="button" class="djangd-icon-button mdc-icon-button djangd-transfer-list__move" data-direction="all-right" aria-label="Move all to selected">
+      <i class="material-icons" aria-hidden="true">last_page</i>
+    </button>
+    <button type="button" class="djangd-icon-button mdc-icon-button djangd-transfer-list__move" data-direction="right" aria-label="Move selected to right">
+      <i class="material-icons" aria-hidden="true">chevron_right</i>
+    </button>
+    <button type="button" class="djangd-icon-button mdc-icon-button djangd-transfer-list__move" data-direction="left" aria-label="Move selected to left">
+      <i class="material-icons" aria-hidden="true">chevron_left</i>
+    </button>
+    <button type="button" class="djangd-icon-button mdc-icon-button djangd-transfer-list__move" data-direction="all-left" aria-label="Move all back">
+      <i class="material-icons" aria-hidden="true">first_page</i>
+    </button>
+  </div>
+  <div class="djangd-transfer-list__panel" data-side="target">
+    {% if target_title %}<div class="djangd-transfer-list__title">{{ target_title }}</div>{% endif %}
+    <ul class="djangd-transfer-list__items" role="listbox" aria-multiselectable="true" aria-label="{{ target_title|default:'Selected items' }}">
+      {% for item in target_items %}
+        <li class="djangd-transfer-list__item" role="option" data-value="{{ item.value|default:item }}" tabindex="0">
+          <input type="checkbox" class="djangd-transfer-list__checkbox" name="{{ name }}" value="{{ item.value|default:item }}" aria-label="{{ item.label|default:item }}" checked />
+          <span class="djangd-transfer-list__label">{{ item.label|default:item }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>

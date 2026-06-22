@@ -1,0 +1,19 @@
+{% load djangd %}{% with modal_id=id|default:"djangd-modal" %}
+<div
+  class="djangd-modal {% if open %}djangd-modal--open{% endif %} {{ extra_classes }}"
+  id="{{ modal_id }}"
+  role="presentation"
+  aria-hidden="{% if open %}false{% else %}true{% endif %}"
+  {{ attrs|djangd_attrs }}>
+  <div class="djangd-modal__backdrop" aria-hidden="true" data-dismiss="modal"></div>
+  <div class="djangd-modal__container"
+       role="dialog"
+       aria-modal="true"
+       {% if label %}aria-label="{{ label }}"{% endif %}
+       {% if labelledby %}aria-labelledby="{{ labelledby }}"{% endif %}
+       {% if describedby %}aria-describedby="{{ describedby }}"{% endif %}
+       tabindex="-1">
+    {{ children }}
+  </div>
+</div>
+{% endwith %}

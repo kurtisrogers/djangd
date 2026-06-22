@@ -1,0 +1,8 @@
+{% load djangd %}<div
+  class="djangd-button-group djangd-button-group--{{ orientation }} djangd-button-group--{{ variant }} {% if full_width %}djangd-button-group--full-width{% endif %} {{ extra_classes }}"
+  role="group"
+  {% if label %}aria-label="{{ label }}"{% endif %}
+  {% if id %}id="{{ id }}"{% endif %}
+  {{ attrs|djangd_attrs }}>
+  {% for btn in buttons %}{{ btn|safe }}{% endfor %}{{ children }}
+</div>

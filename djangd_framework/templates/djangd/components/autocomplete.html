@@ -1,0 +1,40 @@
+{% load djangd %}{% with input_id=id|default:"djangd-ac"|add:"-"|add:name listbox_id=id|default:"djangd-ac"|add:"-"|add:name|add:"-list" %}
+<div class="djangd-autocomplete {% if disabled %}djangd-autocomplete--disabled{% endif %} {{ extra_classes }}"
+     role="combobox"
+     aria-haspopup="listbox"
+     aria-owns="{{ listbox_id }}"
+     aria-expanded="false"
+     {{ attrs|djangd_attrs }}>
+  <label class="djangd-autocomplete__label" for="{{ input_id }}">
+    {{ label }}{% if required %} <span aria-hidden="true">*</span>{% endif %}
+  </label>
+  <input
+    class="djangd-autocomplete__input mdc-text-field__input"
+    type="text"
+    id="{{ input_id }}"
+    name="{{ name }}"
+    value="{{ value }}"
+    role="searchbox"
+    aria-autocomplete="list"
+    aria-controls="{{ listbox_id }}"
+    autocomplete="off"
+    list="{{ input_id }}-datalist"
+    {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+    {% if required %}required aria-required="true"{% endif %}
+    {% if disabled %}disabled aria-disabled="true"{% endif %}
+  />
+  <datalist id="{{ input_id }}-datalist">
+    {% for opt in options %}{% if opt.value %}<option value="{{ opt.value }}">{{ opt.label|default:opt.value }}</option>{% else %}<option value="{{ opt }}"></option>{% endif %}{% endfor %}
+  </datalist>
+  <ul class="djangd-autocomplete__listbox" id="{{ listbox_id }}" role="listbox" hidden>
+    {% for opt in options %}
+      {% if opt.value %}
+        <li class="djangd-autocomplete__option" role="option" data-value="{{ opt.value }}">{{ opt.label|default:opt.value }}</li>
+      {% else %}
+        <li class="djangd-autocomplete__option" role="option" data-value="{{ opt }}">{{ opt }}</li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  {% if helper %}<div class="djangd-autocomplete__helper">{{ helper }}</div>{% endif %}
+</div>
+{% endwith %}

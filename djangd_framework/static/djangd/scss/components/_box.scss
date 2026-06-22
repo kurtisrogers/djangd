@@ -1,0 +1,68 @@
+// =============================================================================
+// Box — generic layout primitive
+// =============================================================================
+
+.djangd-box {
+  // No defaults: Box is intentionally bare so modifiers compose freely.
+
+  // --- Padding helpers ------------------------------------------------------
+  &--p-0 { padding: var(--djangd-space-0); }
+  &--p-1 { padding: var(--djangd-space-1); }
+  &--p-2 { padding: var(--djangd-space-2); }
+  &--p-3 { padding: var(--djangd-space-3); }
+  &--p-4 { padding: var(--djangd-space-4); }
+  &--p-5 { padding: var(--djangd-space-5); }
+  &--p-6 { padding: var(--djangd-space-6); }
+
+  // --- Margin helpers -------------------------------------------------------
+  &--m-0 { margin: var(--djangd-space-0); }
+  &--m-1 { margin: var(--djangd-space-1); }
+  &--m-2 { margin: var(--djangd-space-2); }
+  &--m-3 { margin: var(--djangd-space-3); }
+  &--m-4 { margin: var(--djangd-space-4); }
+  &--m-5 { margin: var(--djangd-space-5); }
+  &--m-6 { margin: var(--djangd-space-6); }
+  &--m-auto { margin: auto; }
+
+  // --- Display --------------------------------------------------------------
+  &--block        { display: block; }
+  &--inline       { display: inline; }
+  &--inline-block { display: inline-block; }
+  &--flex         { display: flex; }
+  &--inline-flex  { display: inline-flex; }
+  &--grid         { display: grid; }
+  &--hidden       { display: none; }
+
+  // --- Alignment (flex / grid) ---------------------------------------------
+  &--align-start    { align-items: flex-start; }
+  &--align-center   { align-items: center; }
+  &--align-end      { align-items: flex-end; }
+  &--align-stretch  { align-items: stretch; }
+
+  &--justify-start    { justify-content: flex-start; }
+  &--justify-center   { justify-content: center; }
+  &--justify-end      { justify-content: flex-end; }
+  &--justify-between  { justify-content: space-between; }
+  &--justify-around   { justify-content: space-around; }
+
+  // --- Corners --------------------------------------------------------------
+  &--rounded-xs   { border-radius: var(--djangd-radius-xs); }
+  &--rounded-sm   { border-radius: var(--djangd-radius-sm); }
+  &--rounded-md   { border-radius: var(--djangd-radius-md); }
+  &--rounded-lg   { border-radius: var(--djangd-radius-lg); }
+  &--rounded-pill { border-radius: var(--djangd-radius-pill); }
+
+  // --- Surface --------------------------------------------------------------
+  &--surface-default {
+    background: var(--djangd-color-surface);
+    color: var(--djangd-color-on-surface);
+  }
+  &--surface-variant {
+    background: var(--djangd-color-surface-variant);
+    color: var(--djangd-color-on-surface-variant);
+  }
+  &--surface-primary {
+    background: var(--djangd-color-primary-container);
+    color: var(--djangd-color-on-primary-container);
+  }
+}

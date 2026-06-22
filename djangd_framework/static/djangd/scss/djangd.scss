@@ -31,5 +31,9 @@
 @use "components/data";
 @use "components/feedback";
 @use "components/layout";
+@use "components/inputs";
+@use "components/overlays";
+@use "components/link";
+@use "components/box";
 
 @use "themes/default" as *;
